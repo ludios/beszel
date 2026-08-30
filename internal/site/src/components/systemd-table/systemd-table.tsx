@@ -1,3 +1,4 @@
+// Model-output: Claude Fable 5
 import { t } from "@lingui/core/macro"
 import { Trans } from "@lingui/react/macro"
 import {
@@ -12,10 +13,10 @@ import {
 	useReactTable,
 	type VisibilityState,
 } from "@tanstack/react-table"
-import { useVirtualizer, type VirtualItem } from "@tanstack/react-virtual"
+import { useWindowVirtualizer, type VirtualItem } from "@tanstack/react-virtual"
 import { LoaderCircleIcon, MaximizeIcon, RefreshCwIcon } from "lucide-react"
 import { listenKeys } from "nanostores"
-import { memo, type ReactNode, useEffect, useMemo, useRef, useState } from "react"
+import { memo, type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { getStatusColor, systemdTableCols } from "@/components/systemd-table/systemd-table-columns"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
@@ -49,6 +50,15 @@ async function getSystemdLogsHtml(systemId: string, serviceName: string): Promis
 			})
 		: ""
 }
+
+/**
+ * Height of a table row, in px. Matches the systems table's row height so the two tables share
+ * one visual rhythm: the tallest cell content (a badge or a line of text) plus breathing room
+ * and the collapsed row border.
+ */
+const ROW_HEIGHT = 42
+/** Height of the table header, in px: an h-12 cell plus its 2px bottom border. */
+const HEADER_HEIGHT = 50
 
 export default function SystemdTable({ systemId }: { systemId?: string }) {
 	const loadTime = Date.now()
@@ -175,7 +185,8 @@ export default function SystemdTable({ systemId }: { systemId?: string }) {
 	}
 
 	return (
-		<Card className="@container w-full px-3 py-5 sm:py-6 sm:px-6">
+		// w-min lets the card grow past the layout width rather than let the table overflow the card
+		<Card className="@container w-min min-w-full px-3 py-5 sm:py-6 sm:px-6">
 			<CardHeader className="p-0 mb-3 sm:mb-4">
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
 					<div className="px-2 sm:px-1">
@@ -216,8 +227,11 @@ const AllSystemdTable = memo(function AllSystemdTable({
 	colLength: number
 	systemId?: string
 }) {
-	// The virtualizer will need a reference to the scrollable container element
-	const scrollRef = useRef<HTMLDivElement>(null)
+	// The page is the scroll container, so the virtualizer tracks the window and needs to know
+	// how far down the page the table starts. Anything above it (charts, header) can change
+	// height at any time, so re-measure whenever the page reflows.
+	const table_ref = useRef<HTMLDivElement>(null)
+	const [scroll_margin, set_scroll_margin] = useState(0)
 	const activeService = useRef<SystemdRecord | null>(null)
 	const [sheetOpen, setSheetOpen] = useState(false)
 	const [sheetSession, setSheetSession] = useState(0)
@@ -227,28 +241,46 @@ const AllSystemdTable = memo(function AllSystemdTable({
 		setSheetOpen(true)
 	}
 
-	const virtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
+	useLayoutEffect(() => {
+		const table_el = table_ref.current
+		if (!table_el) {
+			return
+		}
+		const measure = () => set_scroll_margin(table_el.offsetTop)
+		measure()
+		const observer = new ResizeObserver(measure)
+		observer.observe(document.body)
+		return () => observer.disconnect()
+	}, [])
+
+	const virtualizer = useWindowVirtualizer<HTMLTableRowElement>({
 		count: rows.length,
-		estimateSize: () => 54,
-		getScrollElement: () => scrollRef.current,
+		estimateSize: () => ROW_HEIGHT,
 		overscan: 5,
+		scrollMargin: scroll_margin,
 	})
 	const virtualRows = virtualizer.getVirtualItems()
 
-	const paddingTop = Math.max(0, virtualRows[0]?.start ?? 0 - virtualizer.options.scrollMargin)
-	const paddingBottom = Math.max(0, virtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1]?.end ?? 0))
+	// stand in for the rows above and below the ones we render. virtual item offsets are
+	// page-relative, so take out the offset of the table itself.
+	const first_virtual_row = virtualRows[0]
+	const last_virtual_row = virtualRows[virtualRows.length - 1]
+	const paddingTop = first_virtual_row ? Math.max(0, first_virtual_row.start - scroll_margin) : 0
+	const paddingBottom = last_virtual_row
+		? Math.max(0, virtualizer.getTotalSize() - (last_virtual_row.end - scroll_margin))
+		: 0
 
 	return (
 		<div
 			className={cn(
-				"h-min max-h-[calc(100dvh-17rem)] max-w-full relative overflow-auto border rounded-md",
-				// don't set min height if there are less than 2 rows, do set if we need to display the empty state
-				(!rows.length || rows.length > 2) && "min-h-50"
+				"h-min relative border rounded-md",
+				// only needed to give the empty state room
+				!rows.length && "min-h-50"
 			)}
-			ref={scrollRef}
+			ref={table_ref}
 		>
 			{/* add header height to table size */}
-			<div style={{ height: `${virtualizer.getTotalSize() + 48}px`, paddingTop, paddingBottom }}>
+			<div style={{ height: `${virtualizer.getTotalSize() + HEADER_HEIGHT}px`, paddingTop, paddingBottom }}>
 				<table className="text-sm w-full h-full text-nowrap">
 					<SystemdTableHead table={table} />
 					<TableBody>

@@ -1,3 +1,4 @@
+// Model-output: Claude Fable 5
 import { memo, useState } from "react"
 import { Trans } from "@lingui/react/macro"
 import { compareSemVer, parseSemVer, supportsNetworkMonitors } from "@/lib/utils"
@@ -319,7 +320,9 @@ export default memo(function SystemDetail({ id }: { id: string }) {
 	}
 
 	return (
-		<div className="grid gap-4 mb-14 overflow-x-clip">
+		// no overflow-x-clip: the services table has no inner scrolling, so when it is wider
+		// than the viewport the page must scroll sideways rather than clip the columns
+		<div className="grid gap-4 mb-14">
 			{/* system info */}
 			<InfoBar
 				system={system}
