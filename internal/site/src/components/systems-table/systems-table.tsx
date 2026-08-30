@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5
 import { useLingui as useLinguiContext } from "@lingui/react"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useStore } from "@nanostores/react"
@@ -16,7 +17,7 @@ import {
 	useReactTable,
 	type VisibilityState,
 } from "@tanstack/react-table"
-import { useVirtualizer, type VirtualItem } from "@tanstack/react-virtual"
+import { useWindowVirtualizer, type VirtualItem } from "@tanstack/react-virtual"
 import {
 	ArrowDownIcon,
 	ArrowUpDownIcon,
@@ -28,7 +29,7 @@ import {
 	Settings2Icon,
 	XIcon,
 } from "lucide-react"
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
 	DropdownMenu,
@@ -57,6 +58,15 @@ type ViewMode = "table" | "grid"
 type StatusFilter = "all" | SystemRecord["status"]
 
 const preloadSystemDetail = runOnce(() => import("@/components/routes/system.tsx"))
+
+/**
+ * Height of a table row, in px. Must be at least as tall as the tallest cell content - the 40px
+ * icon buttons in the actions column - plus the collapsed row border, or rows grow past the
+ * height the virtualizer reserved for them.
+ */
+const ROW_HEIGHT = 42
+/** Height of the table header, in px: an h-12 cell plus its 2px bottom border. */
+const HEADER_HEIGHT = 50
 
 export default function SystemsTable() {
 	const data = useStore($systems)
@@ -374,7 +384,13 @@ export default function SystemsTable() {
 	])
 
 	return (
-		<Card className="w-full px-3 py-5 sm:py-6 sm:px-6">
+		<Card
+			className={cn(
+				"w-full px-3 py-5 sm:py-6 sm:px-6",
+				// in table view, grow past the layout width rather than let the table overflow the card
+				viewMode === "table" && "w-min min-w-full"
+			)}
+		>
 			{CardHead}
 			{viewMode === "table" ? (
 				// table layout
@@ -401,31 +417,52 @@ export default function SystemsTable() {
 
 const AllSystemsTable = memo(
 	({ table, rows, colLength }: { table: TableType<SystemRecord>; rows: Row<SystemRecord>[]; colLength: number }) => {
-		// The virtualizer will need a reference to the scrollable container element
-		const scrollRef = useRef<HTMLDivElement>(null)
+		// The page is the scroll container, so the virtualizer tracks the window and needs to know
+		// how far down the page the table starts. Anything above it (alerts, header) can change
+		// height at any time, so re-measure whenever the page reflows.
+		const table_ref = useRef<HTMLDivElement>(null)
+		const [scroll_margin, set_scroll_margin] = useState(0)
 
-		const virtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
+		useLayoutEffect(() => {
+			const table_el = table_ref.current
+			if (!table_el) {
+				return
+			}
+			const measure = () => set_scroll_margin(table_el.offsetTop)
+			measure()
+			const observer = new ResizeObserver(measure)
+			observer.observe(document.body)
+			return () => observer.disconnect()
+		}, [])
+
+		const virtualizer = useWindowVirtualizer<HTMLTableRowElement>({
 			count: rows.length,
-			estimateSize: () => (rows.length > 10 ? 56 : 60),
-			getScrollElement: () => scrollRef.current,
+			estimateSize: () => ROW_HEIGHT,
 			overscan: 5,
+			scrollMargin: scroll_margin,
 		})
 		const virtualRows = virtualizer.getVirtualItems()
 
-		const paddingTop = Math.max(0, virtualRows[0]?.start ?? 0 - virtualizer.options.scrollMargin)
-		const paddingBottom = Math.max(0, virtualizer.getTotalSize() - (virtualRows[virtualRows.length - 1]?.end ?? 0))
+		// stand in for the rows above and below the ones we render. virtual item offsets are
+		// page-relative, so take out the offset of the table itself.
+		const first_virtual_row = virtualRows[0]
+		const last_virtual_row = virtualRows[virtualRows.length - 1]
+		const paddingTop = first_virtual_row ? Math.max(0, first_virtual_row.start - scroll_margin) : 0
+		const paddingBottom = last_virtual_row
+			? Math.max(0, virtualizer.getTotalSize() - (last_virtual_row.end - scroll_margin))
+			: 0
 
 		return (
 			<div
 				className={cn(
-					"h-min max-h-[calc(100dvh-17rem)] max-w-full relative overflow-auto border rounded-md",
-					// don't set min height if there are less than 2 rows, do set if we need to display the empty state
-					(!rows.length || rows.length > 2) && "min-h-50"
+					"h-min relative border rounded-md",
+					// only needed to give the empty state room
+					!rows.length && "min-h-50"
 				)}
-				ref={scrollRef}
+				ref={table_ref}
 			>
 				{/* add header height to table size */}
-				<div style={{ height: `${virtualizer.getTotalSize() + 50}px`, paddingTop, paddingBottom }}>
+				<div style={{ height: `${virtualizer.getTotalSize() + HEADER_HEIGHT}px`, paddingTop, paddingBottom }}>
 					<table className="text-sm w-full h-full">
 						<SystemsTableHead table={table} />
 						<TableBody onMouseEnter={preloadSystemDetail}>
