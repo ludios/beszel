@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5
 import { createRouter } from "@nanostores/router"
 
 const routes = {
@@ -36,7 +37,14 @@ export const $router = createRouter(routes, { links: false })
  *  Base path is automatically prepended if serving from subpath
  */
 export const navigate = (urlString: string) => {
+	const previous_path = location.pathname
 	$router.open(urlString)
+	// pages scroll the window, so a new route would otherwise open at the offset left by the
+	// previous one. back / forward go through popstate instead, where the browser restores
+	// the position it saved.
+	if (location.pathname !== previous_path) {
+		window.scrollTo(0, 0)
+	}
 }
 
 export function Link(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
