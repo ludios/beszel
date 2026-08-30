@@ -1,0 +1,152 @@
+# Environment
+
+Welcome. You're on a NixOS 26.05 machine where many things are already installed, including:
+
+ripgrep, ripgrep-all, node, deno, pnpm, oxfmt, oxlint, jq, python3, uv, natscli (bin: nats), nats-server, psql, ephemeralpg (bin: pg_tmp), google-chrome, curl-impersonate, gcc, go, rustc, cargo, patchelf, zip, unzip, zstd, dmesg, perf, hyperfine, codex, claude.
+
+Before starting or resuming work, check what `hostname` outputs.
+
+- If it ends in "clank", you're unable to hit production databases; run whatever commands you need.
+- If anything any other hostname, stop and ask the user to edit this file.
+
+# Avoid consuming tokens in excess
+
+When verifying how something works, use e.g. `rg -B2 -A10` until you need the whole file.
+
+# The user isn't always right
+
+Post-training causes LLMs to usually go along with whatever the user asked for. This can lead to worse results if there was a better way, or the user missed something. So, if you notice anything which should cause the user to pursue a different line of thinking, please push back even to the point of stopping entirely. This repo is not an eval... it's real life.
+
+LLMs also generally assume that the user wants all the things that already exist, but this isn't always the case: sometimes there are odd leftovers.
+
+Always let the user know if there's an opportunity for simplification.
+
+# Working with Node projects
+
+npm sux; please use pnpm instead.
+
+# There's plenty of time
+
+If more external information is needed, think and keep iterating on web search queries to thoroughly check things. Tips: try site-specific searches e.g. site:github.com, reddit.com, news.ycombinator.com; try combinations of quoted items.
+
+If you can't fetch something, use google-chrome or curl_chrome146 on this machine.
+
+# Tracking AI authorship
+
+Files with any LLM-authored code (not counting mechanistic sed-like changes) begin with a comment like `// Model-output: <model name>`, one per model that contributed (e.g. "Claude Fable 5", "ChatGPT 5.5 Pro"); keep existing lines.
+
+# Code conventions
+
+For JavaScript, TypeScript, and Svelte-related code:
+
+- Use tabs to indent and spaces to align.
+- `snake_case` function names and local variables, except those imported from external libraries or in the platform itself.
+- Use semicolons after statements; no ASI in this house.
+- Classes should be used when:
+	- You have anything like a state machine, or functions closing over the same state. They help us organize and know which state is shared between related functions.
+	- Integrating with an API properly, e.g. making an Error subclass.
+  Otherwise, plain functions are generally fine.
+
+When writing _any_ kind of code, including for the above:
+
+- Think about invariants and add asserts or domain-specific errors where they might prevent misbehavior.
+- Except where very obvious or redundant, write a docstring describing each argument, and the return value when not void. What do they really represent?
+- The "main" function goes at the end and depends on functions above, which depend on functions further above, etc.
+- Scan the functions and generalize if that makes a good result; evict any deadbeats: humans with a small context window need to review and maintain this code.
+- Abstraction boundaries are important. Comments should reflect the current abstraction and generally avoid talking about other things.
+
+Minutae:
+
+- Use the { } curlies even for one-statement blocks.
+- Block contents should not be on the same line that opened the block.
+- Put `return`, `continue`, `break`, `throw` statements on their own line so that they're obvious.
+- Blank lines inside functions should only be used to separate different ideas or groups of steps.
+- Use space-based alignment but only where it looks good: on adjacent lines with a very similar structure, add spaces after shorter identifiers (or the syntax to the right of them) to align things.
+
+# Web design
+
+(Note: existing code violates this, needs to be improved over time...)
+
+Set your mind to 2010 styling and information density; rely almost entirely on lightly styled (not referring to color) native HTML elements.
+
+This is a "dark mode"-only project, so text should be light and backgrounds should be dark.
+
+Write CSS mostly the old way and don't add more than you really need.
+
+It's okay to make things look nice within these constraints, like using 8px padding or grid, suitable line-height, color or font-weight or font-family for differentiation, etc.
+
+We really want things to be obvious at a glance while not having superfluous stuff.
+
+Also, no new title= tooltips; they're dubious desktop-only things which must be written by humans.
+
+# Programming thoughts
+
+We want a coherent, maintainable artifact that humans are happy with.
+
+A program can be:
+- shorter.
+- easier to read by a human.
+- more correct around edge cases.
+- faster than another which does the same thing.
+- much easier to change when the requirements change.
+
+These are sometimes in conflict.
+
+Try writing a function in different ways and see which version is better.
+
+Sometimes a program can log or assert to generate interesting observations which feed into further development of the program. We do our own science on the outputs later to improve the program.
+
+When there are multiple good ways to implement something, especially involving state or the definition of a type: please ask the user. User loves AskUserQuestion.
+
+For CREATE TABLE i.e. DDL work in the .sql files, show that your change is optimal among all variants, or consult the human user; they have good data modeling thoughts.
+
+# After making changes
+
+Automatically commit your changes with this commit template:
+
+	subsystem: short one-line description; semicolon if multiple changes
+
+	Model-output: model name e.g. Claude Fable 5
+
+	<prompt>
+
+	user prompt, verbatim
+
+	AskUserQuestion question-answers, if any
+
+	</prompt>
+
+	<slop>
+
+	model's response at the end of the dialogue, verbatim, in markdown format
+
+	</slop>
+
+"(mid-turn)" if I added something mid-turn; multiple &lt;prompt>&lt;/prompt> &lt;slop>&lt;/slop> ... if the conversation had several real turns.
+
+If acting on a code review from Codex or some other agent, inside the beginning of &lt;slop>, add:
+
+	<review model="model e.g. gpt-5.6-sol" reasoning_effort="effort e.g. xhigh">
+
+	...
+
+	</review>
+
+# Codex code review after each commit
+
+After each commit you make, get it reviewed by Codex (GPT-5.6-Sol at xhigh reasoning):
+
+	codex review --commit <sha> -c model="gpt-5.6-sol" -c model_reasoning_effort="xhigh"
+
+Notes:
+
+- Codex is configured globally in `~/.codex/config.toml` (`approval_policy = "never"`, `sandbox_mode = "danger-full-access"`) to never ask for permission and run unsandboxed, so reviews and `codex exec` runs never block on prompts. If codex ever stalls waiting for approval, check that file.
+- A review can take several minutes; run it in the background and continue if you have other work.
+- Sol often nitpicks, or cares about bizarre, irrelevant edge cases. Ignore those findings; they should not stop you from making progress.
+- For oversights that are true and interesting, fix them and make another commit (using the usual commit template). If you fixed nothing, say briefly in your reply why the findings didn't warrant changes.
+- Do _not_ send that follow-up fix commit through another Codex review — the review cycle for a change ends after one round of findings and fixes. (Exception: the follow-up grew into something substantial beyond addressing the findings.)
+- If you made several commits in a row, make sure the reviews cover all of them: either review each commit, or run one ranged review of the whole batch with `codex review --base <sha before your first commit>` plus the same `-c` options.
+
+# Thank you for your hard work on this project
+
+<3
