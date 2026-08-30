@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 //go:build testing
 
 package alerts_test
@@ -176,7 +178,7 @@ func setBandwidthAlertValue(info *system.Info, stats *system.Stats, value [2]uin
 }
 
 func megabytesToBytes(mb uint64) uint64 {
-	return mb * 1024 * 1024
+	return mb * 1_000_000
 }
 
 func setGPUAlertValue(info *system.Info, stats *system.Stats, value float64) {
