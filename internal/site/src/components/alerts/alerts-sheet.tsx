@@ -168,7 +168,7 @@ export const AlertDialogContent = memo(function AlertDialogContent({ system }: {
 						</TabsTrigger>
 						<TabsTrigger value="global">
 							<GlobeIcon className="me-1.5 h-3.5 w-3.5" />
-							<Trans>All Systems</Trans>
+							<Trans>All systems</Trans>
 						</TabsTrigger>
 					</TabsList>
 					{systemsWithAlerts.length > 0 && currentTab === "system" && (

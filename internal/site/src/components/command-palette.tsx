@@ -91,7 +91,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 						>
 							<ServerIcon className="me-2 size-4" />
 							<span>
-								<Trans>All Systems</Trans>
+								<Trans>All systems</Trans>
 							</span>
 							<CommandShortcut>
 								<Trans>Page</Trans>

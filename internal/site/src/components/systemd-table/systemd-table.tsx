@@ -191,7 +191,7 @@ export default function SystemdTable({ systemId }: { systemId?: string }) {
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
 					<div className="px-2 sm:px-1">
 						<CardTitle className="mb-2">
-							<Trans>Systemd Services</Trans>
+							<Trans>Systemd services</Trans>
 						</CardTitle>
 						<div className="text-sm text-muted-foreground flex items-center flex-wrap">
 							<Trans>Total: {data.length}</Trans>

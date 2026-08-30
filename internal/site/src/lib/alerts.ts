@@ -18,7 +18,7 @@ export const alertInfo: Record<string, AlertInfo> = {
     singleDesc: () => `${t`System`} ${t`Down`}`,
   },
   CPU: {
-    name: () => t`CPU Usage`,
+    name: () => t`CPU usage`,
     unit: "%",
     icon: CpuIcon,
     desc: () => t`Triggers when CPU usage exceeds a threshold`,
@@ -36,13 +36,13 @@ export const alertInfo: Record<string, AlertInfo> = {
     desc: () => t`Triggers when CPU steal time exceeds a threshold`,
   },
   Memory: {
-    name: () => t`Memory Usage`,
+    name: () => t`Memory usage`,
     unit: "%",
     icon: MemoryStickIcon,
     desc: () => t`Triggers when memory usage exceeds a threshold`,
   },
   Disk: {
-    name: () => t`Disk Usage`,
+    name: () => t`Disk usage`,
     unit: "%",
     icon: HardDriveIcon,
     desc: () => t`Triggers when usage of any disk exceeds a threshold`,
@@ -84,7 +84,7 @@ export const alertInfo: Record<string, AlertInfo> = {
     desc: () => t`Triggers when any sensor exceeds a threshold`,
   },
   LoadAvg1: {
-    name: () => t`Load Average 1m`,
+    name: () => t`Load average 1m`,
     unit: "",
     icon: HourglassIcon,
     max: 100,
@@ -94,7 +94,7 @@ export const alertInfo: Record<string, AlertInfo> = {
     desc: () => t`Triggers when 1 minute load average exceeds a threshold`,
   },
   LoadAvg5: {
-    name: () => t`Load Average 5m`,
+    name: () => t`Load average 5m`,
     unit: "",
     icon: HourglassIcon,
     max: 100,
@@ -104,7 +104,7 @@ export const alertInfo: Record<string, AlertInfo> = {
     desc: () => t`Triggers when 5 minute load average exceeds a threshold`,
   },
   LoadAvg15: {
-    name: () => t`Load Average 15m`,
+    name: () => t`Load average 15m`,
     unit: "",
     icon: HourglassIcon,
     min: 0.1,

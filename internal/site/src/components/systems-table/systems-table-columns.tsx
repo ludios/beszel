@@ -222,7 +222,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 		{
 			id: "loadAverage",
 			accessorFn: ({ info }) => info.la?.reduce((acc, curr) => acc + curr, 0),
-			name: () => t({ message: "Load Avg", comment: "Short label for load average" }),
+			name: () => t({ message: "Load", comment: "Short label for load average" }),
 			size: 0,
 			Icon: HourglassIcon,
 			header: sortableHeader,

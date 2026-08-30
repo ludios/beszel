@@ -105,7 +105,7 @@ export default memo(function CpuCoresSheet({
 
 	return (
 		<Sheet open={cpuCoresOpen} onOpenChange={setCpuCoresOpen}>
-			<DialogTitle className="sr-only">{t`CPU Usage`}</DialogTitle>
+			<DialogTitle className="sr-only">{t`CPU usage`}</DialogTitle>
 			<SheetTrigger asChild>
 				<Button
 					title={t`View more`}

@@ -29,7 +29,7 @@ export function CpuChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={t`CPU Usage`}
+			title={t`CPU usage`}
 			description={t`Average system-wide CPU utilization`}
 			cornerEl={
 				<div className="flex gap-2">
@@ -43,7 +43,7 @@ export function CpuChart({
 				maxToggled={showMax}
 				dataPoints={[
 					{
-						label: t`CPU Usage`,
+						label: t`CPU usage`,
 						dataKey: ({ stats }) => (showMax ? stats?.cpum : stats?.cpu),
 						color: 1,
 						opacity: 0.4,
@@ -75,7 +75,7 @@ export function ContainerCpuChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={dockerOrPodman(t`Docker CPU Usage`, isPodman)}
+			title={dockerOrPodman(t`Docker CPU usage`, isPodman)}
 			description={t`Average CPU utilization of containers`}
 			cornerEl={<FilterBar />}
 		>

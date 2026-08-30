@@ -21,7 +21,7 @@ export function LoadAverageChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={t`Load Average`}
+			title={t`Load average`}
 			description={t`System load averages over time`}
 			legend={true}
 		>

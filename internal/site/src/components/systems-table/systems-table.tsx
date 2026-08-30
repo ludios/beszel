@@ -222,7 +222,7 @@ export default function SystemsTable() {
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
 					<div className="px-2 sm:px-1">
 						<CardTitle className="mb-2">
-							<Trans>All Systems</Trans>
+							<Trans>All systems</Trans>
 						</CardTitle>
 						<CardDescription className="flex">
 							<Trans>Click on a system to view more information.</Trans>
@@ -289,7 +289,7 @@ export default function SystemsTable() {
 											onValueChange={handleStatusFilterChange}
 										>
 											<DropdownMenuRadioItem value="all" onSelect={(e) => e.preventDefault()}>
-												<Trans>All Systems</Trans>
+												<Trans>All systems</Trans>
 											</DropdownMenuRadioItem>
 											<DropdownMenuRadioItem value="up" onSelect={(e) => e.preventDefault()}>
 												<Trans>Up ({upSystemsLength})</Trans>

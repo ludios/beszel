@@ -32,7 +32,7 @@ export function MemoryChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={t`Memory Usage`}
+			title={t`Memory usage`}
 			description={t`Precise utilization at the recorded time`}
 			cornerEl={maxValSelect}
 		>
@@ -99,7 +99,7 @@ export function ContainerMemoryChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={dockerOrPodman(t`Docker Memory Usage`, isPodman)}
+			title={dockerOrPodman(t`Docker Memory usage`, isPodman)}
 			description={t`Memory usage of containers`}
 			cornerEl={<FilterBar />}
 		>

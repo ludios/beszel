@@ -146,7 +146,7 @@ export function DiskUsageChart({ systemData, extraFsName }: { systemData: System
 				}}
 				dataPoints={[
 					{
-						label: t`Disk Usage`,
+						label: t`Disk usage`,
 						color: 4,
 						opacity: 0.4,
 						dataKey: extraFsName ? diskDataFns.extraUsage(extraFsName) : diskDataFns.usage,
