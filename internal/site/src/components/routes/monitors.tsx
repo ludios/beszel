@@ -17,7 +17,7 @@ export default memo(() => {
 	})
 
 	useEffect(() => {
-		document.title = `${t`Network Monitors`} / Beszel`
+		document.title = `${t`Network monitors`} / Beszel`
 	}, [t])
 
 	return (

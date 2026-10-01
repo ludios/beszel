@@ -131,7 +131,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 						>
 							<NetworkIcon className="me-2 size-4" />
 							<span>
-								<Trans>Network Monitors</Trans>
+								<Trans>Network monitors</Trans>
 							</span>
 							<CommandShortcut>
 								<Trans>Page</Trans>
