@@ -1,4 +1,5 @@
 // Model-output: Claude Fable 5
+// Model-output: Claude Opus 5.5
 
 import { useMemo } from "react"
 import { t } from "@lingui/core/macro"
@@ -112,12 +113,7 @@ export function ContainerNetworkChart({
 	})
 
 	const contentFormatter = useMemo(() => {
-		const getRxTxBytes = (record?: { b?: [number, number] }) => {
-			if (record?.b?.length && record.b.length >= 2) {
-				return [Number(record.b[0]) || 0, Number(record.b[1]) || 0]
-			}
-			return [0, 0]
-		}
+		const getRxTxBytes = (record?: { b?: [number, number] }) => [record?.b?.[0] ?? 0, record?.b?.[1] ?? 0]
 		const formatRxTx = (recv: number, sent: number) => {
 			const { value: receivedValue, unit: receivedUnit } = formatBytes(recv, true, userSettings.unitNet, false)
 			const { value: sentValue, unit: sentUnit } = formatBytes(sent, true, userSettings.unitNet, false)
@@ -141,7 +137,7 @@ export function ContainerNetworkChart({
 					for (const [containerKey, value] of Object.entries(payloadData)) {
 						if (!value || typeof value !== "object") continue
 						if (filteredKeys.has(containerKey)) continue
-						const [sent, recv] = getRxTxBytes(value as { b?: [number, number]; ns?: number; nr?: number })
+						const [sent, recv] = getRxTxBytes(value as { b?: [number, number] })
 						totalSent += sent
 						totalRecv += recv
 					}

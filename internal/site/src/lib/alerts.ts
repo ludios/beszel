@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { t } from "@lingui/core/macro"
 import { ContainerIcon, CpuIcon, HardDriveIcon, MemoryStickIcon, NetworkIcon, ServerCrashIcon, ServerIcon } from "lucide-react"
 import type { RecordSubscription } from "pocketbase"

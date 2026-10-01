@@ -67,8 +67,6 @@ export interface SystemInfo {
 	dp: number
 	/** battery percent and state */
 	bat?: [number, BatteryState]
-	/** bandwidth (mb) */
-	b: number
 	/** bandwidth bytes */
 	bb?: number
 	/** agent version */
