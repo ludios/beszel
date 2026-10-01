@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 /** biome-ignore-all lint/correctness/useHookAtTopLevel: Hooks live inside memoized column definitions */
 import { plural, t } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
@@ -369,7 +370,11 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 							<Link
 								href={getPagePath($router, "system", { id: info.row.original.id })}
 								tabIndex={-1}
-								className="flex flex-col gap-0.5 min-w-0 py-1 relative z-10"
+								className={cn(
+									"flex min-w-0 py-1 relative z-10",
+									// one line in table view: rows have a fixed height
+									viewMode === "table" ? "items-center gap-1.5" : "flex-col gap-0.5"
+								)}
 							>
 								{displayedConnections.map(([id, wifi]) => (
 									<WiFiSignal key={id} wifi={wifi} />
