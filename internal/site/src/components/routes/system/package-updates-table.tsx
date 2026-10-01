@@ -75,7 +75,7 @@ function HeaderButton({
 	return (
 		<Button
 			className={cn(
-				"h-9 px-3 flex items-center gap-2 duration-50",
+				"w-full justify-start h-9 px-3 flex items-center gap-2 duration-50",
 				isSorted && "bg-accent/70 light:bg-accent text-accent-foreground/90"
 			)}
 			variant="ghost"
@@ -83,7 +83,7 @@ function HeaderButton({
 		>
 			<Icon className="size-4" />
 			{name}
-			<ArrowUpDownIcon className="size-4" />
+			<ArrowUpDownIcon className="ms-auto size-4" />
 		</Button>
 	)
 }

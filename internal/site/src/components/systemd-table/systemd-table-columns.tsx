@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import type { Column, ColumnDef } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { cn, decimalString, formatBytes, hourWithSeconds } from "@/lib/utils"
@@ -173,13 +174,16 @@ function HeaderButton({ column, name, Icon }: { column: Column<SystemdRecord>; n
 	const isSorted = column.getIsSorted()
 	return (
 		<Button
-			className={cn("h-9 px-3 flex items-center gap-2 duration-50", isSorted && "bg-accent/70 light:bg-accent text-accent-foreground/90")}
+			className={cn(
+				"w-full justify-start h-9 px-3 flex items-center gap-2 duration-50",
+				isSorted && "bg-accent/70 light:bg-accent text-accent-foreground/90"
+			)}
 			variant="ghost"
 			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 		>
 			{Icon && <Icon className="size-4" />}
 			{name}
-			<ArrowUpDownIcon className="size-4" />
+			<ArrowUpDownIcon className="ms-auto size-4" />
 		</Button>
 	)
 }
