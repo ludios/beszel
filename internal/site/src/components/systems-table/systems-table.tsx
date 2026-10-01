@@ -66,8 +66,8 @@ const preloadSystemDetail = runOnce(() => import("@/components/routes/system.tsx
  * height the virtualizer reserved for them.
  */
 const ROW_HEIGHT = 32
-/** Height of the table header, in px: an h-8 cell plus its 2px bottom border. */
-const HEADER_HEIGHT = 34
+/** Height of the table header, in px: an h-8 cell, which its collapsed bottom border doesn't add to. */
+const HEADER_HEIGHT = 32
 
 export default function SystemsTable() {
 	const data = useStore($systems)
@@ -446,7 +446,7 @@ const AllSystemsTable = memo(
 				className={cn(
 					"h-min relative border rounded-md",
 					// only needed to give the empty state room
-					!rows.length && "min-h-50"
+					!rows.length && "min-h-46"
 				)}
 				ref={table_ref}
 			>
@@ -486,12 +486,14 @@ const AllSystemsTable = memo(
 function SystemsTableHead({ table }: { table: TableType<SystemRecord> }) {
 	useLinguiContext()
 	return (
-		<TableHeader className="sticky top-0 z-50 w-full border-b-2">
+		// before:hidden drops index.css's band above sticky headers: it covers gaps at the top of a
+		// scrolling box, but this table scrolls with the page, where it would only hide the top border
+		<TableHeader className="sticky top-0 z-50 w-full border-b-2 before:hidden">
 			{table.getHeaderGroups().map((headerGroup) => (
 				<tr key={headerGroup.id}>
 					{headerGroup.headers.map((header) => {
 						return (
-							<TableHead className="h-8 px-0" key={header.id}>
+							<TableHead className="h-8 px-1.5" key={header.id}>
 								{flexRender(header.column.columnDef.header, header.getContext())}
 							</TableHead>
 						)
