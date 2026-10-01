@@ -87,7 +87,7 @@ export default function Navbar() {
 					<DropdownMenuTrigger
 						onMouseEnter={() => import("@/components/routes/settings/general")}
 						className="ms-3"
-						aria-label="Open Menu"
+						aria-label="Open menu"
 					>
 						<MenuIcon />
 					</DropdownMenuTrigger>
@@ -100,7 +100,7 @@ export default function Navbar() {
 								className="flex items-center"
 							>
 								<ContainerIcon className="h-4 w-4 me-2.5" strokeWidth={1.5} />
-								<Trans>All Containers</Trans>
+								<Trans>All containers</Trans>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => navigate(getPagePath($router, "smart"))} className="flex items-center">
 								<HardDriveIcon className="h-4 w-4 me-2.5" strokeWidth={1.5} />
@@ -145,7 +145,7 @@ export default function Navbar() {
 						<DropdownMenuGroup>
 							<DropdownMenuItem onSelect={logOut} className="flex items-center">
 								<LogOutIcon className="h-4 w-4 me-2.5" />
-								<Trans>Log Out</Trans>
+								<Trans>Log out</Trans>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 					</DropdownMenuContent>
@@ -169,7 +169,7 @@ export default function Navbar() {
 						</Link>
 					</TooltipTrigger>
 					<TooltipContent>
-						<Trans>All Containers</Trans>
+						<Trans>All containers</Trans>
 					</TooltipContent>
 				</Tooltip>
 				<Tooltip>
@@ -216,7 +216,7 @@ export default function Navbar() {
 				</Tooltip>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<button aria-label="User Actions" className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}>
+						<button aria-label="User actions" className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}>
 							<UserIcon className="h-[1.2rem] w-[1.2rem]" />
 						</button>
 					</DropdownMenuTrigger>
@@ -232,7 +232,7 @@ export default function Navbar() {
 						<DropdownMenuItem onSelect={logOut}>
 							<LogOutIcon className="me-2.5 h-4 w-4" />
 							<span>
-								<Trans>Log Out</Trans>
+								<Trans>Log out</Trans>
 							</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>

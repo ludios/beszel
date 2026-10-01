@@ -42,7 +42,7 @@ export default function ConfigYaml() {
 		<div>
 			<div>
 				<h3 className="text-xl font-medium mb-2">
-					<Trans>YAML Configuration</Trans>
+					<Trans>YAML configuration</Trans>
 				</h3>
 				<p className="text-sm text-muted-foreground leading-relaxed">
 					<Trans>Export your current systems configuration.</Trans>

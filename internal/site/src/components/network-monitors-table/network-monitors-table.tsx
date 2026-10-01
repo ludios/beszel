@@ -360,7 +360,7 @@ export default function NetworkMonitorsTableNew({
 									<div className="border-r">
 										<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
 											<ArrowUpDownIcon className="size-4" />
-											<Trans>Sort By</Trans>
+											<Trans>Sort by</Trans>
 										</DropdownMenuLabel>
 										<DropdownMenuSeparator />
 										<div className="px-1 pb-1">
@@ -394,7 +394,7 @@ export default function NetworkMonitorsTableNew({
 									<div>
 										<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
 											<EyeIcon className="size-4" />
-											<Trans>Visible Fields</Trans>
+											<Trans>Visible fields</Trans>
 										</DropdownMenuLabel>
 										<DropdownMenuSeparator />
 										<div className="px-1.5 pb-1">

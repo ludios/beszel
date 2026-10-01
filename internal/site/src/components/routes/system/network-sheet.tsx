@@ -107,7 +107,7 @@ export default memo(function NetworkSheet({
 					<ChartCard
 						empty={dataEmpty}
 						grid={grid}
-						title={t`Cumulative Download`}
+						title={t`Cumulative download`}
 						description={t`Total data received for each interface`}
 						legend={showNetLegend}
 						className="min-h-auto"
@@ -130,7 +130,7 @@ export default memo(function NetworkSheet({
 					<ChartCard
 						empty={dataEmpty}
 						grid={grid}
-						title={t`Cumulative Upload`}
+						title={t`Cumulative upload`}
 						description={t`Total data sent for each interface`}
 						legend={showNetLegend}
 						className="min-h-auto"

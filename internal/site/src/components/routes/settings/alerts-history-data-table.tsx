@@ -49,7 +49,7 @@ const SectionIntro = memo(() => {
 	return (
 		<div>
 			<h3 className="text-xl font-medium mb-2">
-				<Trans>Alert History</Trans>
+				<Trans>Alert history</Trans>
 			</h3>
 			<p className="text-sm text-muted-foreground leading-relaxed">
 				<Trans>View your 200 most recent alerts.</Trans>

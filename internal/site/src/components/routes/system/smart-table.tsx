@@ -248,7 +248,7 @@ export const createColumns = (
 	// {
 	// 	accessorKey: "serial",
 	// 	sortingFn: (a, b) => a.original.serial.localeCompare(b.original.serial),
-	// 	header: ({ column }) => <HeaderButton column={column} name={t`Serial Number`} Icon={HashIcon} />,
+	// 	header: ({ column }) => <HeaderButton column={column} name={t`Serial number`} Icon={HashIcon} />,
 	// 	cell: ({ getValue }) => <span className="ms-1.5">{getValue() as string}</span>,
 	// },
 	// {
@@ -766,7 +766,7 @@ function DiskSheet({
 			<SheetContent className="w-full sm:max-w-220 gap-0">
 				<SheetHeader className="mb-0 border-b">
 					<SheetTitle>
-						<Trans>S.M.A.R.T. Details</Trans> - {deviceName}
+						<Trans>S.M.A.R.T. details</Trans> - {deviceName}
 					</SheetTitle>
 					<SheetDescription className="flex flex-wrap items-center gap-x-2 gap-y-1">
 						{model}
@@ -780,7 +780,7 @@ function DiskSheet({
 										<span>{serialNumber}</span>
 									</TooltipTrigger>
 									<TooltipContent>
-										<Trans>Serial Number</Trans>
+										<Trans>Serial number</Trans>
 									</TooltipContent>
 								</Tooltip>
 							</>
@@ -810,11 +810,11 @@ function DiskSheet({
 							<Alert className="pb-3 shrink-0">
 								{status === "PASSED" ? <CheckCircle2Icon className="size-4" /> : <XCircleIcon className="size-4" />}
 								<AlertTitle>
-									<Trans>S.M.A.R.T. Self-Test</Trans>: {status}
+									<Trans>S.M.A.R.T. self-test</Trans>: {status}
 								</AlertTitle>
 								{failedAttributes.length > 0 && (
 									<AlertDescription>
-										<Trans>Failed Attributes:</Trans> {failedAttributes.map((attr) => attr.n).join(", ")}
+										<Trans>Failed attributes:</Trans> {failedAttributes.map((attr) => attr.n).join(", ")}
 									</AlertDescription>
 								)}
 							</Alert>

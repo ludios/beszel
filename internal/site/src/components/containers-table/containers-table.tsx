@@ -170,7 +170,7 @@ export default function ContainersTable({ systemId }: { systemId?: string }) {
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
 					<div className="px-2 sm:px-1">
 						<CardTitle className="mb-2">
-							<Trans>All Containers</Trans>
+							<Trans>All containers</Trans>
 						</CardTitle>
 						<CardDescription className="flex">
 							<Trans>Click on a container to view more information.</Trans>

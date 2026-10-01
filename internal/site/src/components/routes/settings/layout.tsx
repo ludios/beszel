@@ -67,14 +67,14 @@ export default function SettingsLayout() {
 			preload: notificationsSettingsImport,
 		},
 		{
-			title: t`Tokens & Fingerprints`,
+			title: t`Tokens & fingerprints`,
 			href: getPagePath($router, "settings", { name: "tokens" }),
 			icon: FingerprintIcon,
 			noReadOnly: true,
 			preload: fingerprintsSettingsImport,
 		},
 		{
-			title: t`Alert History`,
+			title: t`Alert history`,
 			href: getPagePath($router, "settings", { name: "alert-history" }),
 			icon: AlertOctagonIcon,
 			preload: alertsHistoryDataTableSettingsImport,
@@ -87,7 +87,7 @@ export default function SettingsLayout() {
 			preload: heartbeatSettingsImport,
 		},
 		{
-			title: t`YAML Config`,
+			title: t`YAML config`,
 			href: getPagePath($router, "settings", { name: "config" }),
 			icon: FileSlidersIcon,
 			admin: true,

@@ -105,7 +105,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 						>
 							<ContainerIcon className="me-2 size-4" />
 							<span>
-								<Trans>All Containers</Trans>
+								<Trans>All containers</Trans>
 							</span>
 							<CommandShortcut>
 								<Trans>Page</Trans>
@@ -171,7 +171,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 						>
 							<FingerprintIcon className="me-2 size-4" />
 							<span>
-								<Trans>Tokens & Fingerprints</Trans>
+								<Trans>Tokens & fingerprints</Trans>
 							</span>
 							{SettingsShortcut}
 						</CommandItem>
@@ -183,7 +183,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 						>
 							<AlertOctagonIcon className="me-2 size-4" />
 							<span>
-								<Trans>Alert History</Trans>
+								<Trans>Alert history</Trans>
 							</span>
 							{SettingsShortcut}
 						</CommandItem>

@@ -119,7 +119,7 @@ const SectionIntro = memo(() => {
 	return (
 		<div>
 			<h3 className="text-xl font-medium mb-2">
-				<Trans>Tokens & Fingerprints</Trans>
+				<Trans>Tokens & fingerprints</Trans>
 			</h3>
 			<p className="text-sm text-muted-foreground leading-relaxed">
 				<Trans>Tokens and fingerprints are used to authenticate WebSocket connections to the hub.</Trans>

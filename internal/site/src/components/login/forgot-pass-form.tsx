@@ -73,7 +73,7 @@ export default function ForgotPassword() {
 						) : (
 							<SendHorizonalIcon className="me-2 h-4 w-4" />
 						)}
-						<Trans>Reset Password</Trans>
+						<Trans>Reset password</Trans>
 					</button>
 				</div>
 			</form>

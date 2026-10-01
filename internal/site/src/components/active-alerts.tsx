@@ -116,7 +116,7 @@ export const ActiveAlerts = ({ className }: { className?: string }) => {
 					)
 				}
 				buttonLabel={<Trans>View alerts</Trans>}
-				sheetTitle={<Trans>Active Alerts</Trans>}
+				sheetTitle={<Trans>Active alerts</Trans>}
 				sheetDescription={
 					<Plural value={alertCount} one="# alert is currently triggered" other="# alerts are currently triggered" />
 				}

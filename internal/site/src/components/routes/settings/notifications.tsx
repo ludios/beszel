@@ -125,7 +125,7 @@ const SettingsNotificationsPage = ({ userSettings }: { userSettings: UserSetting
 					<div className="grid grid-cols-1 sm:flex items-center justify-between gap-4">
 						<div>
 							<h3 className="mb-1 text-lg font-medium">
-								<Trans>Webhook / Push notifications</Trans>
+								<Trans>Webhook / push notifications</Trans>
 							</h3>
 							<p className="text-sm text-muted-foreground leading-relaxed">
 								<Trans>
@@ -169,7 +169,7 @@ const SettingsNotificationsPage = ({ userSettings }: { userSettings: UserSetting
 					disabled={isLoading}
 				>
 					{isLoading ? <LoaderCircleIcon className="h-4 w-4 animate-spin" /> : <SaveIcon className="h-4 w-4" />}
-					<Trans>Save Settings</Trans>
+					<Trans>Save settings</Trans>
 				</Button>
 			</div>
 		</div>

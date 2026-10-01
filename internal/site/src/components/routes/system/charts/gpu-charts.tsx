@@ -81,7 +81,7 @@ export function GpuPowerChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={t`GPU Power Draw`}
+			title={t`GPU power draw`}
 			description={t`Average power consumption of GPUs`}
 		>
 			<LineChartDefault
@@ -124,7 +124,7 @@ export function GpuCharts({
 							legend={true}
 							empty={dataEmpty}
 							grid={grid}
-							title={t`GPU Engines`}
+							title={t`GPU engines`}
 							description={t`Average utilization of GPU engines`}
 						>
 							<GpuEnginesChart chartData={chartData} />

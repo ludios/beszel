@@ -73,7 +73,7 @@ export const systemdTableCols: ColumnDef<SystemdRecord>[] = [
 	{
 		id: "sub",
 		accessorFn: (record) => record.sub,
-		header: ({ column }) => <HeaderButton column={column} name={t`Sub State`} Icon={ActivityIcon} />,
+		header: ({ column }) => <HeaderButton column={column} name={t`Sub state`} Icon={ActivityIcon} />,
 		cell: ({ getValue }) => {
 			const subState = getValue() as ServiceSubState
 			const subStateLabel = ServiceSubStateLabels[subState] || "Unknown"
@@ -112,7 +112,7 @@ export const systemdTableCols: ColumnDef<SystemdRecord>[] = [
 			return record.cpuPeak ?? 0
 		},
 		invertSorting: true,
-		header: ({ column }) => <HeaderButton column={column} name={t`CPU Peak`} Icon={CpuIcon} />,
+		header: ({ column }) => <HeaderButton column={column} name={t`CPU peak`} Icon={CpuIcon} />,
 		cell: ({ getValue }) => {
 			const val = getValue() as number
 			if (val < 0) {
@@ -141,7 +141,7 @@ export const systemdTableCols: ColumnDef<SystemdRecord>[] = [
 		id: "memPeak",
 		accessorFn: (record) => record.memPeak,
 		invertSorting: true,
-		header: ({ column }) => <HeaderButton column={column} name={t`Memory Peak`} Icon={MemoryStickIcon} />,
+		header: ({ column }) => <HeaderButton column={column} name={t`Memory peak`} Icon={MemoryStickIcon} />,
 		cell: ({ getValue }) => {
 			const val = getValue() as number
 			if (!val) {

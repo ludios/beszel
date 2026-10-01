@@ -538,8 +538,6 @@ function SystemdSheet({
 		)
 	}
 
-	const capitalize = (str: string) => `${str.charAt(0).toUpperCase()}${str.slice(1).toLowerCase()}`
-
 	return (
 		<Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
 			<LogsFullscreenDialog
@@ -553,7 +551,7 @@ function SystemdSheet({
 			<SheetContent className="w-full min-w-0 sm:max-w-220 p-6 overflow-y-auto">
 				<SheetHeader className="p-0">
 					<SheetTitle>
-						<Trans>Service Details</Trans>
+						<Trans>Service details</Trans>
 					</SheetTitle>
 					<SheetDescription className="sr-only">{service.name}</SheetDescription>
 				</SheetHeader>
@@ -648,7 +646,7 @@ function SystemdSheet({
 
 					<div>
 						<h3 className="text-sm font-medium mb-3">
-							<Trans>Runtime Metrics</Trans>
+							<Trans>Runtime metrics</Trans>
 						</h3>
 						<div className="border rounded-md">
 							<table className="w-full text-sm">
@@ -658,7 +656,7 @@ function SystemdSheet({
 									{renderRow("tasks", t`Tasks`, tasks, true)}
 									{renderRow("cpuTime", t`CPU time`, cpuTime)}
 									{renderRow("memory", t`Memory`, memoryCurrent, true)}
-									{renderRow("memoryPeak", capitalize(t`Memory Peak`), memoryPeak)}
+									{renderRow("memoryPeak", t`Memory peak`, memoryPeak)}
 									{renderRow("memoryLimit", t`Memory limit`, memoryLimit)}
 									{renderRow("restarts", t`Restarts`, restartsValue, true)}
 								</tbody>
@@ -741,7 +739,7 @@ function SystemdSheet({
 									{renderRow("inactiveSince", t`Became inactive`, inactiveEnterTimestamp)}
 									{renderRow("execMainStart", t`Process started`, execMainStartTimestamp)}
 									{/* {renderRow("invocationId", t`Invocation ID`, details?.InvocationID)} */}
-									{/* {renderRow("freezerState", t`Freezer State`, details?.FreezerState)} */}
+									{/* {renderRow("freezerState", t`Freezer state`, details?.FreezerState)} */}
 								</tbody>
 							</table>
 						</div>
@@ -757,8 +755,8 @@ function SystemdSheet({
 									{renderRow("canStart", t`Can start`, details?.CanStart ? t`Yes` : t`No`)}
 									{renderRow("canStop", t`Can stop`, details?.CanStop ? t`Yes` : t`No`)}
 									{renderRow("canReload", t`Can reload`, details?.CanReload ? t`Yes` : t`No`)}
-									{/* {renderRow("refuseManualStart", t`Refuse Manual Start`, details?.RefuseManualStart ? t`Yes` : t`No`)}
-									{renderRow("refuseManualStop", t`Refuse Manual Stop`, details?.RefuseManualStop ? t`Yes` : t`No`)} */}
+									{/* {renderRow("refuseManualStart", t`Refuse manual start`, details?.RefuseManualStart ? t`Yes` : t`No`)}
+									{renderRow("refuseManualStop", t`Refuse manual stop`, details?.RefuseManualStop ? t`Yes` : t`No`)} */}
 								</tbody>
 							</table>
 						</div>

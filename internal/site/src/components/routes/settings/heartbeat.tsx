@@ -81,7 +81,7 @@ export default function HeartbeatSettings() {
 		<div>
 			<div>
 				<h3 className="text-xl font-medium mb-2">
-					<Trans>Heartbeat Monitoring</Trans>
+					<Trans>Heartbeat monitoring</Trans>
 				</h3>
 				<p className="text-sm text-muted-foreground leading-relaxed">
 					<Trans>
@@ -121,7 +121,7 @@ function EnabledState({
 			<div className="grid gap-4 sm:grid-cols-2">
 				<ConfigItem label={t`Endpoint URL`} value={status.url ?? ""} mono />
 				<ConfigItem label={t`Interval`} value={`${status.interval}s`} />
-				<ConfigItem label={t`HTTP Method`} value={status.method ?? "POST"} />
+				<ConfigItem label={t`HTTP method`} value={status.method ?? "POST"} />
 			</div>
 
 			<Separator />

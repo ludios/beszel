@@ -66,7 +66,7 @@ export default function SettingsProfilePage({ userSettings }: { userSettings: Us
 						</p>
 					</div>
 					<Label className="block" htmlFor="lang">
-						<Trans>Preferred Language</Trans>
+						<Trans>Preferred language</Trans>
 					</Label>
 					<Select name="lang" value={i18n.locale} onValueChange={(lang: string) => dynamicActivate(lang)}>
 						<SelectTrigger id="lang">
@@ -286,7 +286,7 @@ export default function SettingsProfilePage({ userSettings }: { userSettings: Us
 				<Separator />
 				<Button type="submit" className="flex items-center gap-1.5 disabled:opacity-100" disabled={isLoading}>
 					{isLoading ? <LoaderCircleIcon className="h-4 w-4 animate-spin" /> : <SaveIcon className="h-4 w-4" />}
-					<Trans>Save Settings</Trans>
+					<Trans>Save settings</Trans>
 				</Button>
 			</form>
 		</div>

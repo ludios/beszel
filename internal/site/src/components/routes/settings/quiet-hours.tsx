@@ -43,7 +43,7 @@ import type { QuietHoursRecord, SystemRecord } from "@/types"
 
 export function QuietHours() {
 	const { t } = useLingui()
-	const quietHoursTranslation = t`Quiet Hours`
+	const quietHoursTranslation = t`Quiet hours`
 	const [data, setData] = useState<QuietHoursRecord[]>([])
 	const [dialogOpen, setDialogOpen] = useState(false)
 	const [editingRecord, setEditingRecord] = useState<QuietHoursRecord | null>(null)
@@ -293,7 +293,7 @@ function QuietHoursDialog({
 	toast: ReturnType<typeof useToast>["toast"]
 }) {
 	const { t } = useLingui()
-	const quietHoursTranslation = t`Quiet Hours`
+	const quietHoursTranslation = t`Quiet hours`
 	const [selectedSystem, setSelectedSystem] = useState(editingRecord?.system || "")
 	const [isGlobal, setIsGlobal] = useState(!editingRecord?.system)
 	const [windowType, setWindowType] = useState<"one-time" | "daily">(editingRecord?.type || "one-time")
@@ -466,7 +466,7 @@ function QuietHoursDialog({
 					<>
 						<div className="grid gap-2">
 							<Label htmlFor="start-datetime">
-								<Trans>Start Time</Trans>
+								<Trans>Start time</Trans>
 							</Label>
 							<Input
 								id="start-datetime"
@@ -480,7 +480,7 @@ function QuietHoursDialog({
 						</div>
 						<div className="grid gap-2">
 							<Label htmlFor="end-datetime">
-								<Trans>End Time</Trans>
+								<Trans>End time</Trans>
 							</Label>
 							<Input
 								id="end-datetime"
@@ -497,7 +497,7 @@ function QuietHoursDialog({
 					<div className="grid gap-2 grid-cols-2">
 						<div>
 							<Label htmlFor="start-time">
-								<Trans>Start Time</Trans>
+								<Trans>Start time</Trans>
 							</Label>
 							<Input
 								className="tabular-nums tracking-tighter"
@@ -510,7 +510,7 @@ function QuietHoursDialog({
 						</div>
 						<div>
 							<Label htmlFor="end-time">
-								<Trans>End Time</Trans>
+								<Trans>End time</Trans>
 							</Label>
 							<Input
 								className="tabular-nums tracking-tighter"

@@ -124,7 +124,7 @@ export default memo(function CpuCoresSheet({
 							key="cpu-breakdown"
 							empty={dataEmpty}
 							grid={grid}
-							title={t`CPU Time Breakdown`}
+							title={t`CPU time breakdown`}
 							description={t`Percentage of time spent in each state`}
 							legend={true}
 							className="min-h-auto"
@@ -148,7 +148,7 @@ export default memo(function CpuCoresSheet({
 							key="cpu-cores-all"
 							empty={dataEmpty}
 							grid={grid}
-							title={t`CPU Cores`}
+							title={t`CPU cores`}
 							legend={numCores < 10}
 							description={t`Per-core average utilization`}
 							className="min-h-auto"

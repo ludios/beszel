@@ -72,7 +72,7 @@ export const alertInfo: Record<string, AlertInfo> = {
     start: 5,
   },
   GPU: {
-    name: () => t`GPU Usage`,
+    name: () => t`GPU usage`,
     unit: "%",
     icon: GpuIcon,
     desc: () => t`Triggers when GPU usage exceeds a threshold`,

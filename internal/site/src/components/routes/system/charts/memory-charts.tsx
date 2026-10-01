@@ -67,7 +67,7 @@ export function MemoryChart({
 						order: 2,
 					},
 					{
-						label: t`Cache / Buffers`,
+						label: t`Cache / buffers`,
 						dataKey: ({ stats }) => (showMax ? null : stats?.mb),
 						color: "hsla(160 60% 45% / 0.5)",
 						opacity: 0.4,
@@ -99,7 +99,7 @@ export function ContainerMemoryChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={dockerOrPodman(t`Docker Memory usage`, isPodman)}
+			title={dockerOrPodman(t`Docker memory usage`, isPodman)}
 			description={t`Memory usage of containers`}
 			cornerEl={<FilterBar />}
 		>
@@ -143,7 +143,7 @@ export function SwapChart({
 		return null
 	}
 	return (
-		<ChartCard empty={dataEmpty} grid={grid} title={t`Swap Usage`} description={t`Swap space used by the system`}>
+		<ChartCard empty={dataEmpty} grid={grid} title={t`Swap usage`} description={t`Swap space used by the system`}>
 			<AreaChartDefault
 				chartData={chartData}
 				domain={[0, () => toFixedFloat(chartData.systemStats.at(-1)?.stats.s ?? 0.04, 2)]}

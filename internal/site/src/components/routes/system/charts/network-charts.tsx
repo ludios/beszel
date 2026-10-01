@@ -159,7 +159,7 @@ export function ContainerNetworkChart({
 		<ChartCard
 			empty={dataEmpty}
 			grid={grid}
-			title={dockerOrPodman(t`Docker Network I/O`, isPodman)}
+			title={dockerOrPodman(t`Docker network I/O`, isPodman)}
 			description={t`Network traffic of containers`}
 			cornerEl={<FilterBar />}
 		>

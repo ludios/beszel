@@ -203,7 +203,7 @@ export const SystemDialog = ({ setOpen, system }: { setOpen: (open: boolean) => 
 							className={cn(isUnixSocket && "hidden")}
 						/>
 						<Label htmlFor="pkey" className="xs:text-end whitespace-pre">
-							<Trans comment="Use 'Key' if your language requires many more characters">Public Key</Trans>
+							<Trans comment="Use 'Key' if your language requires many more characters">Public key</Trans>
 						</Label>
 						<InputCopy value={publicKey} id="pkey" name="pkey" />
 						<Label htmlFor="tkn" className="xs:text-end whitespace-pre">
