@@ -1,4 +1,5 @@
 // Model-output: Claude Opus 5
+// Model-output: Claude Opus 5.5
 import { useLingui as useLinguiContext } from "@lingui/react"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useStore } from "@nanostores/react"
@@ -418,7 +419,7 @@ export default function SystemsTable() {
 const AllSystemsTable = memo(
 	({ table, rows, colLength }: { table: TableType<SystemRecord>; rows: Row<SystemRecord>[]; colLength: number }) => {
 		// The page is the scroll container, so the virtualizer tracks the window and needs to know
-		// how far down the page the table starts. Anything above it (alerts, header) can change
+		// how far down the page the first row starts. Anything above it (alerts, header) can change
 		// height at any time, so re-measure whenever the page reflows.
 		const table_ref = useRef<HTMLDivElement>(null)
 		const [scroll_margin, set_scroll_margin] = useState(0)
@@ -428,7 +429,8 @@ const AllSystemsTable = memo(
 			if (!table_el) {
 				return
 			}
-			const measure = () => set_scroll_margin(table_el.offsetTop)
+			// offsetTop would be relative to the nearest positioned ancestor, not the page
+			const measure = () => set_scroll_margin(table_el.getBoundingClientRect().top + window.scrollY + HEADER_HEIGHT)
 			measure()
 			const observer = new ResizeObserver(measure)
 			observer.observe(document.body)
@@ -444,7 +446,7 @@ const AllSystemsTable = memo(
 		const virtualRows = virtualizer.getVirtualItems()
 
 		// stand in for the rows above and below the ones we render. virtual item offsets are
-		// page-relative, so take out the offset of the table itself.
+		// page-relative, so take out the offset of the first row.
 		const first_virtual_row = virtualRows[0]
 		const last_virtual_row = virtualRows[virtualRows.length - 1]
 		const paddingTop = first_virtual_row ? Math.max(0, first_virtual_row.start - scroll_margin) : 0
