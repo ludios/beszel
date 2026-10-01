@@ -1,4 +1,5 @@
 // Model-output: Claude Fable 5
+// Model-output: Claude Opus 5.5
 
 import { plural, t } from "@lingui/core/macro"
 import { type ClassValue, clsx } from "clsx"
@@ -259,12 +260,20 @@ export function formatTemperature(celsius: number, unit?: Unit): { value: number
 	}
 }
 
-/** Format bytes to user's preferred unit */
+/**
+ * Format bytes to user's preferred unit
+ * @param size number of bytes (or megabytes, if isMegabytes)
+ * @param perSecond whether size is a rate; appends "/s" or "ps" to the unit
+ * @param unit Unit.Bytes or Unit.Bits
+ * @param isMegabytes whether size is in megabytes rather than bytes
+ * @param min_kilo never pick a unit below kB (or kb), so small values show as fractions of a kB
+ */
 export function formatBytes(
 	size: number,
 	perSecond = false,
 	unit = Unit.Bytes,
-	isMegabytes = false
+	isMegabytes = false,
+	min_kilo = false
 ): { value: number; unit: string } {
 	// Convert MB to bytes if isMegabytes is true
 	if (isMegabytes) size *= 1e6
@@ -273,8 +282,8 @@ export function formatBytes(
 	if (unit == Unit.Bits) {
 		const bits = size * 8
 		const suffix = perSecond ? "ps" : ""
-		if (bits < 1000) return { value: bits, unit: `b${suffix}` }
-		if (bits < 1_000_000) return { value: bits / 1_000, unit: `Kb${suffix}` }
+		if (bits < 1000 && !min_kilo) return { value: bits, unit: `b${suffix}` }
+		if (bits < 1_000_000) return { value: bits / 1_000, unit: `kb${suffix}` }
 		if (bits < 1_000_000_000)
 			return {
 				value: bits / 1_000_000,
@@ -292,8 +301,8 @@ export function formatBytes(
 	}
 	// bytes (SI decimal units)
 	const suffix = perSecond ? "/s" : ""
-	if (size < 1000) return { value: size, unit: `B${suffix}` }
-	if (size < 1e6) return { value: size / 1e3, unit: `KB${suffix}` }
+	if (size < 1000 && !min_kilo) return { value: size, unit: `B${suffix}` }
+	if (size < 1e6) return { value: size / 1e3, unit: `kB${suffix}` }
 	if (size < 1e9)
 		return {
 			value: size / 1e6,

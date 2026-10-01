@@ -333,8 +333,8 @@ msgstr "Binary"
 
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Bits (Kbps, Mbps, Gbps)"
-msgstr "Bits (Kbps, Mbps, Gbps)"
+msgid "Bits (kbps, Mbps, Gbps)"
+msgstr "Bits (kbps, Mbps, Gbps)"
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Boot state"
@@ -355,8 +355,8 @@ msgstr "Bulk copy"
 
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Bytes (KB/s, MB/s, GB/s)"
-msgstr "Bytes (KB/s, MB/s, GB/s)"
+msgid "Bytes (kB/s, MB/s, GB/s)"
+msgstr "Bytes (kB/s, MB/s, GB/s)"
 
 #: src/components/routes/system/charts/memory-charts.tsx
 msgid "Cache / Buffers"

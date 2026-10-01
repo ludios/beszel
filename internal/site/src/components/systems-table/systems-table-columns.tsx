@@ -272,9 +272,9 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 					return null
 				}
 				const userSettings = useStore($userSettings, { keys: ["unitNet"] })
-				const { value, unit } = formatBytes(val, true, userSettings.unitNet, false)
+				const { value, unit } = formatBytes(val, true, userSettings.unitNet, false, true)
 				return (
-					<span className="tabular-nums whitespace-nowrap">
+					<span className="block text-end tabular-nums whitespace-nowrap">
 						{decimalString(value, value >= 100 ? 1 : 2)} {unit}
 					</span>
 				)

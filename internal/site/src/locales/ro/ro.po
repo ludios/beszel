@@ -338,8 +338,8 @@ msgstr "Binar"
 
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Bits (Kbps, Mbps, Gbps)"
-msgstr "Biți (Kbps, Mbps, Gbps)"
+msgid "Bits (kbps, Mbps, Gbps)"
+msgstr "Biți (kbps, Mbps, Gbps)"
 
 #: src/components/systemd-table/systemd-table.tsx
 msgid "Boot state"
@@ -360,8 +360,8 @@ msgstr ""
 
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Bytes (KB/s, MB/s, GB/s)"
-msgstr "Octeți (KB/s, MB/s, GB/s)"
+msgid "Bytes (kB/s, MB/s, GB/s)"
+msgstr "Octeți (kB/s, MB/s, GB/s)"
 
 #: src/components/routes/system/charts/memory-charts.tsx
 msgid "Cache / Buffers"

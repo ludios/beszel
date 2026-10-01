@@ -338,7 +338,7 @@ msgstr "ثنائي"
 
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Bits (Kbps, Mbps, Gbps)"
+msgid "Bits (kbps, Mbps, Gbps)"
 msgstr "بت (كيلوبت/ثانية، ميجابت/ثانية، جيجابت/ثانية)"
 
 #: src/components/systemd-table/systemd-table.tsx
@@ -360,7 +360,7 @@ msgstr "نسخ جماعي"
 
 #: src/components/routes/settings/general.tsx
 #: src/components/routes/settings/general.tsx
-msgid "Bytes (KB/s, MB/s, GB/s)"
+msgid "Bytes (kB/s, MB/s, GB/s)"
 msgstr "بايت (كيلوبايت/ثانية، ميجابايت/ثانية، جيجابايت/ثانية)"
 
 #: src/components/routes/system/charts/memory-charts.tsx
