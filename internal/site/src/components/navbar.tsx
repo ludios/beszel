@@ -18,6 +18,7 @@ import {
 } from "lucide-react"
 import { lazy, Suspense, useState } from "react"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -49,7 +50,7 @@ export default function Navbar() {
 	const AdminLinks = AdminDropdownGroup()
 
 	return (
-		<div className="flex items-center bg-card p-3 border border-border/60 rounded-md my-4">
+		<Card className="flex items-center p-3 my-4">
 			<Suspense>
 				<CommandPalette open={commandPaletteOpen} setOpen={setCommandPaletteOpen} />
 			</Suspense>
@@ -245,7 +246,7 @@ export default function Navbar() {
 					</Button>
 				)}
 			</div>
-		</div>
+		</Card>
 	)
 }
 
