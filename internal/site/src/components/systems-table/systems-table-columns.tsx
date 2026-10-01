@@ -108,7 +108,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			minSize: 0,
 			accessorKey: "name",
 			id: "system",
-			name: () => t`System`,
+			name: () => t`Name`,
 			sortingFn: (a, b) => a.original.name.localeCompare(b.original.name),
 			filterFn: (() => {
 				let filterInput = ""
