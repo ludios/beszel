@@ -296,7 +296,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 				}
 				const { value, unit } = formatTemperature(val, userSettings.unitTemp)
 				return (
-					<span className={cn("tabular-nums whitespace-nowrap", viewMode === "table" && "ps-0.5")}>
+					<span className="block text-end tabular-nums whitespace-nowrap">
 						{decimalString(value, value >= 100 ? 1 : 2)} {unit}
 					</span>
 				)
@@ -339,11 +339,12 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 					<Link
 						tabIndex={-1}
 						href={getPagePath($router, "system", { id: info.row.original.id })}
-						className="flex items-center gap-1 tabular-nums tracking-tight relative z-10"
+						className="flex items-center justify-end gap-1 tabular-nums tracking-tight relative z-10"
 						title={stateLabel}
 					>
 						<Icon className={cn("size-3.5", iconColor)} />
-						<span className="min-w-10">{pct}%</span>
+						{/* fixed-width slot keeps the icons in one column across rows */}
+						<span className={cn(viewMode === "table" && "min-w-10 text-end")}>{pct}%</span>
 					</Link>
 				)
 			},
@@ -512,7 +513,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 				if (!uptime) {
 					return null
 				}
-				return <span className="tabular-nums whitespace-nowrap">{secondsToUptimeString(uptime)}</span>
+				return <span className="block text-end tabular-nums whitespace-nowrap">{secondsToUptimeString(uptime)}</span>
 			},
 		},
 		{
