@@ -61,13 +61,13 @@ type StatusFilter = "all" | SystemRecord["status"]
 const preloadSystemDetail = runOnce(() => import("@/components/routes/system.tsx"))
 
 /**
- * Height of a table row, in px. Must be at least as tall as the tallest cell content - the 40px
+ * Height of a table row, in px. Must be at least as tall as the tallest cell content - the 28px
  * icon buttons in the actions column - plus the collapsed row border, or rows grow past the
  * height the virtualizer reserved for them.
  */
-const ROW_HEIGHT = 42
-/** Height of the table header, in px: an h-12 cell plus its 2px bottom border. */
-const HEADER_HEIGHT = 50
+const ROW_HEIGHT = 32
+/** Height of the table header, in px: an h-8 cell plus its 2px bottom border. */
+const HEADER_HEIGHT = 34
 
 export default function SystemsTable() {
 	const data = useStore($systems)
@@ -219,7 +219,7 @@ export default function SystemsTable() {
 
 	const CardHead = useMemo(() => {
 		return (
-			<div className="flex gap-2 ms-auto w-full md:w-80 mb-3 sm:mb-4">
+			<div className="flex gap-2 ms-auto w-full md:w-80 mb-3">
 				<div className="relative flex-1">
 					<Input
 						placeholder={t`Filter...`}
@@ -374,7 +374,7 @@ export default function SystemsTable() {
 	return (
 		<Card
 			className={cn(
-				"w-full px-3 py-5 sm:py-6 sm:px-6",
+				"w-full p-3",
 				// in table view, grow past the layout width rather than let the table overflow the card
 				viewMode === "table" && "w-min min-w-full"
 			)}
@@ -491,7 +491,7 @@ function SystemsTableHead({ table }: { table: TableType<SystemRecord> }) {
 				<tr key={headerGroup.id}>
 					{headerGroup.headers.map((header) => {
 						return (
-							<TableHead className="px-1.5" key={header.id}>
+							<TableHead className="h-8 px-0" key={header.id}>
 								{flexRender(header.column.columnDef.header, header.getContext())}
 							</TableHead>
 						)
@@ -530,7 +530,7 @@ const SystemTableRow = memo(
 								width: cell.column.getSize(),
 								height: virtualRow.size,
 							}}
-							className="py-0 ps-4.5"
+							className="py-0 px-3"
 						>
 							{flexRender(cell.column.columnDef.cell, cell.getContext())}
 						</TableCell>

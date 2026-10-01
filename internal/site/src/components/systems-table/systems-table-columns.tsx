@@ -564,7 +564,7 @@ export function SystemsTableColumns(viewMode: "table" | "grid"): ColumnDef<Syste
 			name: () => t({ message: "Actions", comment: "Table column" }),
 			size: 50,
 			cell: ({ row }) => (
-				<div className="relative z-10 flex justify-end items-center gap-1 -ms-3">
+				<div className="relative z-10 flex justify-end items-center gap-1 -ms-3 [&_button]:size-7">
 					<AlertButton system={row.original} />
 					<ActionsButton system={row.original} />
 				</div>
@@ -581,7 +581,7 @@ function sortableHeader(context: HeaderContext<SystemRecord, unknown>) {
 	return (
 		<Button
 			variant="ghost"
-			className={cn("h-9 px-3 flex duration-50", isSorted && "bg-accent/70 light:bg-accent text-accent-foreground/90")}
+			className={cn("h-7 px-3 flex duration-50", isSorted && "bg-accent/70 light:bg-accent text-accent-foreground/90")}
 			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 		>
 			{Icon && <Icon className="me-2 size-4" />}
