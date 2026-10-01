@@ -52,7 +52,7 @@ import { cn, runOnce } from "@/lib/utils"
 import type { SystemRecord } from "@/types"
 import AlertButton from "../alerts/alert-button"
 import { $router, Link } from "../router"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { Card, CardContent, CardHeader } from "../ui/card"
 import { SystemsTableColumns, ActionsButton, IndicatorDot } from "./systems-table-columns"
 
 type ViewMode = "table" | "grid"
@@ -220,155 +220,144 @@ export default function SystemsTable() {
 	const CardHead = useMemo(() => {
 		return (
 			<CardHeader className="p-0 mb-3 sm:mb-4">
-				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
-					<div className="px-2 sm:px-1">
-						<CardTitle className="mb-2">
-							<Trans>All systems</Trans>
-						</CardTitle>
-						<CardDescription className="flex">
-							<Trans>Click on a system to view more information.</Trans>
-						</CardDescription>
+				<div className="flex gap-2 ms-auto w-full md:w-80">
+					<div className="relative flex-1">
+						<Input
+							placeholder={t`Filter...`}
+							onChange={(e) => setFilter(e.target.value)}
+							value={filter}
+							className="ps-4 pe-10 w-full"
+						/>
+						{filter && (
+							<Button
+								type="button"
+								variant="ghost"
+								size="icon"
+								aria-label={t`Clear`}
+								className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
+								onClick={() => setFilter("")}
+							>
+								<XIcon className="h-4 w-4" />
+							</Button>
+						)}
 					</div>
-
-					<div className="flex gap-2 ms-auto w-full md:w-80">
-						<div className="relative flex-1">
-							<Input
-								placeholder={t`Filter...`}
-								onChange={(e) => setFilter(e.target.value)}
-								value={filter}
-								className="ps-4 pe-10 w-full"
-							/>
-							{filter && (
-								<Button
-									type="button"
-									variant="ghost"
-									size="icon"
-									aria-label={t`Clear`}
-									className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
-									onClick={() => setFilter("")}
-								>
-									<XIcon className="h-4 w-4" />
-								</Button>
-							)}
-						</div>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="outline">
-									<Settings2Icon className="me-1.5 size-4 opacity-80" />
-									<Trans>View</Trans>
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end" className="h-72 md:h-auto min-w-48 md:min-w-auto overflow-y-auto">
-								<div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-s md:divide-y-0">
-									<div className="border-r">
-										<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="outline">
+								<Settings2Icon className="me-1.5 size-4 opacity-80" />
+								<Trans>View</Trans>
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="h-72 md:h-auto min-w-48 md:min-w-auto overflow-y-auto">
+							<div className="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-s md:divide-y-0">
+								<div className="border-r">
+									<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
+										<LayoutGridIcon className="size-4" />
+										<Trans>Layout</Trans>
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									<DropdownMenuRadioGroup className="px-1 pb-1" value={viewMode} onValueChange={handleViewModeChange}>
+										<DropdownMenuRadioItem value="table" onSelect={(e) => e.preventDefault()} className="gap-2">
+											<LayoutListIcon className="size-4" />
+											<Trans>Table</Trans>
+										</DropdownMenuRadioItem>
+										<DropdownMenuRadioItem value="grid" onSelect={(e) => e.preventDefault()} className="gap-2">
 											<LayoutGridIcon className="size-4" />
-											<Trans>Layout</Trans>
-										</DropdownMenuLabel>
-										<DropdownMenuSeparator />
-										<DropdownMenuRadioGroup className="px-1 pb-1" value={viewMode} onValueChange={handleViewModeChange}>
-											<DropdownMenuRadioItem value="table" onSelect={(e) => e.preventDefault()} className="gap-2">
-												<LayoutListIcon className="size-4" />
-												<Trans>Table</Trans>
-											</DropdownMenuRadioItem>
-											<DropdownMenuRadioItem value="grid" onSelect={(e) => e.preventDefault()} className="gap-2">
-												<LayoutGridIcon className="size-4" />
-												<Trans>Grid</Trans>
-											</DropdownMenuRadioItem>
-										</DropdownMenuRadioGroup>
-									</div>
+											<Trans>Grid</Trans>
+										</DropdownMenuRadioItem>
+									</DropdownMenuRadioGroup>
+								</div>
 
-									<div className="border-r">
-										<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
-											<FilterIcon className="size-4" />
-											<Trans>Status</Trans>
-										</DropdownMenuLabel>
-										<DropdownMenuSeparator />
-										<DropdownMenuRadioGroup
-											className="px-1 pb-1"
-											value={statusFilter}
-											onValueChange={handleStatusFilterChange}
-										>
-											<DropdownMenuRadioItem value="all" onSelect={(e) => e.preventDefault()}>
-												<Trans>All systems</Trans>
-											</DropdownMenuRadioItem>
-											<DropdownMenuRadioItem value="up" onSelect={(e) => e.preventDefault()}>
-												<Trans>Up ({upSystemsLength})</Trans>
-											</DropdownMenuRadioItem>
-											<DropdownMenuRadioItem value="down" onSelect={(e) => e.preventDefault()}>
-												<Trans>Down ({downSystemsLength})</Trans>
-											</DropdownMenuRadioItem>
-											<DropdownMenuRadioItem value="paused" onSelect={(e) => e.preventDefault()}>
-												<Trans>Paused ({pausedSystemsLength})</Trans>
-											</DropdownMenuRadioItem>
-										</DropdownMenuRadioGroup>
-									</div>
+								<div className="border-r">
+									<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
+										<FilterIcon className="size-4" />
+										<Trans>Status</Trans>
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									<DropdownMenuRadioGroup
+										className="px-1 pb-1"
+										value={statusFilter}
+										onValueChange={handleStatusFilterChange}
+									>
+										<DropdownMenuRadioItem value="all" onSelect={(e) => e.preventDefault()}>
+											<Trans>All systems</Trans>
+										</DropdownMenuRadioItem>
+										<DropdownMenuRadioItem value="up" onSelect={(e) => e.preventDefault()}>
+											<Trans>Up ({upSystemsLength})</Trans>
+										</DropdownMenuRadioItem>
+										<DropdownMenuRadioItem value="down" onSelect={(e) => e.preventDefault()}>
+											<Trans>Down ({downSystemsLength})</Trans>
+										</DropdownMenuRadioItem>
+										<DropdownMenuRadioItem value="paused" onSelect={(e) => e.preventDefault()}>
+											<Trans>Paused ({pausedSystemsLength})</Trans>
+										</DropdownMenuRadioItem>
+									</DropdownMenuRadioGroup>
+								</div>
 
-									<div className="border-r">
-										<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
-											<ArrowUpDownIcon className="size-4" />
-											<Trans>Sort by</Trans>
-										</DropdownMenuLabel>
-										<DropdownMenuSeparator />
-										<div className="px-1 pb-1">
-											{columns.map((column) => {
-												if (!column.getCanSort()) return null
-												let Icon = <span className="w-6"></span>
-												// if current sort column, show sort direction
-												if (sorting[0]?.id === column.id) {
-													if (sorting[0]?.desc) {
-														Icon = <ArrowUpIcon className="me-2 size-4" />
-													} else {
-														Icon = <ArrowDownIcon className="me-2 size-4" />
-													}
+								<div className="border-r">
+									<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
+										<ArrowUpDownIcon className="size-4" />
+										<Trans>Sort by</Trans>
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									<div className="px-1 pb-1">
+										{columns.map((column) => {
+											if (!column.getCanSort()) return null
+											let Icon = <span className="w-6"></span>
+											// if current sort column, show sort direction
+											if (sorting[0]?.id === column.id) {
+												if (sorting[0]?.desc) {
+													Icon = <ArrowUpIcon className="me-2 size-4" />
+												} else {
+													Icon = <ArrowDownIcon className="me-2 size-4" />
 												}
-												return (
-													<DropdownMenuItem
-														onSelect={(e) => {
-															e.preventDefault()
-															handleSortingChange([
-																{ id: column.id, desc: sorting[0]?.id === column.id && !sorting[0]?.desc },
-															])
-														}}
-														key={column.id}
-													>
-														{Icon}
-														{/* @ts-ignore */}
-														{column.columnDef.name()}
-													</DropdownMenuItem>
-												)
-											})}
-										</div>
-									</div>
-
-									<div>
-										<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
-											<EyeIcon className="size-4" />
-											<Trans>Visible fields</Trans>
-										</DropdownMenuLabel>
-										<DropdownMenuSeparator />
-										<div className="px-1.5 pb-1">
-											{columns
-												.filter((column) => column.getCanHide())
-												.map((column) => {
-													return (
-														<DropdownMenuCheckboxItem
-															key={column.id}
-															onSelect={(e) => e.preventDefault()}
-															checked={column.getIsVisible()}
-															onCheckedChange={(value) => column.toggleVisibility(!!value)}
-														>
-															{/* @ts-ignore */}
-															{column.columnDef.name()}
-														</DropdownMenuCheckboxItem>
-													)
-												})}
-										</div>
+											}
+											return (
+												<DropdownMenuItem
+													onSelect={(e) => {
+														e.preventDefault()
+														handleSortingChange([
+															{ id: column.id, desc: sorting[0]?.id === column.id && !sorting[0]?.desc },
+														])
+													}}
+													key={column.id}
+												>
+													{Icon}
+													{/* @ts-ignore */}
+													{column.columnDef.name()}
+												</DropdownMenuItem>
+											)
+										})}
 									</div>
 								</div>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</div>
+
+								<div>
+									<DropdownMenuLabel className="pt-2 px-3.5 flex items-center gap-2">
+										<EyeIcon className="size-4" />
+										<Trans>Visible fields</Trans>
+									</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									<div className="px-1.5 pb-1">
+										{columns
+											.filter((column) => column.getCanHide())
+											.map((column) => {
+												return (
+													<DropdownMenuCheckboxItem
+														key={column.id}
+														onSelect={(e) => e.preventDefault()}
+														checked={column.getIsVisible()}
+														onCheckedChange={(value) => column.toggleVisibility(!!value)}
+													>
+														{/* @ts-ignore */}
+														{column.columnDef.name()}
+													</DropdownMenuCheckboxItem>
+												)
+											})}
+									</div>
+								</div>
+							</div>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</CardHeader>
 		)
