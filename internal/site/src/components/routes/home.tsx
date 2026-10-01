@@ -7,7 +7,7 @@ export default memo(() => {
 	const { t } = useLingui()
 
 	useEffect(() => {
-		document.title = `${t`All systems`} / Beszel`
+		document.title = `${t`Machines`} / Beszel`
 	}, [t])
 
 	return useMemo(
