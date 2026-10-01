@@ -114,7 +114,7 @@ export default function SettingsProfilePage({ userSettings }: { userSettings: Us
 								<Trans>Dark</Trans>
 							</SelectItem>
 							<SelectItem value="system">
-								<Trans>System</Trans>
+								<Trans context="Theme that follows the operating system">System</Trans>
 							</SelectItem>
 						</SelectContent>
 					</Select>

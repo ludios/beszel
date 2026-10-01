@@ -1330,7 +1330,7 @@ msgstr "Gubitak mrežnog monitora"
 #: src/components/network-monitors-table/monitor-dialog.tsx
 #: src/components/network-monitors-table/network-monitors-table.tsx
 #: src/components/routes/monitors.tsx
-msgid "Network Monitors"
+msgid "Network monitors"
 msgstr "Mrežni monitori"
 
 #: src/components/routes/system/charts/network-charts.tsx

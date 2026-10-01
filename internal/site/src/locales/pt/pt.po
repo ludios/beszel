@@ -1330,7 +1330,7 @@ msgstr "Perda de pacotes do monitor de rede"
 #: src/components/network-monitors-table/monitor-dialog.tsx
 #: src/components/network-monitors-table/network-monitors-table.tsx
 #: src/components/routes/monitors.tsx
-msgid "Network Monitors"
+msgid "Network monitors"
 msgstr "Monitores de rede"
 
 #: src/components/routes/system/charts/network-charts.tsx

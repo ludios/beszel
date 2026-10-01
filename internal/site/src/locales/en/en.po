@@ -1325,7 +1325,7 @@ msgstr "Network Monitor Loss"
 #: src/components/network-monitors-table/monitor-dialog.tsx
 #: src/components/network-monitors-table/network-monitors-table.tsx
 #: src/components/routes/monitors.tsx
-msgid "Network Monitors"
+msgid "Network monitors"
 msgstr "Network Monitors"
 
 #: src/components/routes/system/charts/network-charts.tsx
