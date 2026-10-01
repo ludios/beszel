@@ -83,7 +83,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 					)}
 					<CommandGroup heading={t`Pages / Settings`}>
 						<CommandItem
-							keywords={["home"]}
+							keywords={["home", "systems"]}
 							onSelect={() => {
 								navigate(basePath)
 								setOpen(false)
