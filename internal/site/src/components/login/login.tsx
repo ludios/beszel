@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react"
 import { UserAuthForm } from "@/components/login/auth-form"
 import { pb } from "@/lib/api"
 import { Logo } from "../logo"
-import { ModeToggle } from "../mode-toggle"
 import { $router } from "../router"
 import { useTheme } from "../theme-provider"
 import ForgotPassword from "./forgot-pass-form"
@@ -56,9 +55,6 @@ export default function () {
 				// @ts-expect-error
 				style={{ maxWidth: "21.5em", "--border": resolvedTheme == "light" ? "hsl(30, 8%, 70%)" : "hsl(220, 3%, 25%)" }}
 			>
-				<div className="absolute top-3 right-3">
-					<ModeToggle />
-				</div>
 				<div className="text-center">
 					<h1 className="mb-3">
 						<Logo className="h-7 fill-foreground mx-auto" />

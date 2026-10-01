@@ -35,7 +35,6 @@ import { isAdmin, isReadOnlyUser, logOut, pb } from "@/lib/api"
 import { cn, runOnce } from "@/lib/utils"
 import { AddSystemDialog } from "./add-system"
 import { Logo } from "./logo"
-import { ModeToggle } from "./mode-toggle"
 import { $router, basePath, Link, navigate, prependBasePath } from "./router"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
@@ -81,7 +80,6 @@ export default function Navbar() {
 
 			{/* mobile menu */}
 			<div className="ms-auto flex items-center text-xl md:hidden">
-				<ModeToggle />
 				<Button variant="ghost" size="icon" onClick={() => setCommandPaletteOpen(true)}>
 					<SearchIcon className="h-[1.2rem] w-[1.2rem]" />
 				</Button>
@@ -201,7 +199,6 @@ export default function Navbar() {
 						<Trans>Network monitors</Trans>
 					</TooltipContent>
 				</Tooltip>
-				<ModeToggle />
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Link

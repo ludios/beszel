@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 /** biome-ignore-all lint/correctness/useUniqueElementIds: component is only rendered once */
 import { Trans, useLingui } from "@lingui/react/macro"
 import { LanguagesIcon, LoaderCircleIcon, SaveIcon } from "lucide-react"
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { type Theme, useTheme } from "@/components/theme-provider"
 import Slider from "@/components/ui/slider"
 import { HourFormat, Unit } from "@/lib/enums"
 import { dynamicActivate } from "@/lib/i18n"
@@ -20,6 +22,7 @@ import { saveSettings } from "./layout"
 export default function SettingsProfilePage({ userSettings }: { userSettings: UserSettings }) {
 	const [isLoading, setIsLoading] = useState(false)
 	const { i18n } = useLingui()
+	const { theme, setTheme } = useTheme()
 	const currentUserSettings = useStore($userSettings)
 	const layoutWidth = currentUserSettings.layoutWidth ?? defaultLayoutWidth
 	// without a value the hidden select submits an empty string, which would persist
@@ -88,6 +91,31 @@ export default function SettingsProfilePage({ userSettings }: { userSettings: Us
 									{label}
 								</SelectItem>
 							))}
+						</SelectContent>
+					</Select>
+				</div>
+				<Separator />
+				<div className="grid gap-2">
+					<h3 className="mb-1 text-lg font-medium">
+						<label htmlFor="theme">
+							<Trans>Theme</Trans>
+						</label>
+					</h3>
+					{/* no name: the theme is kept per browser, not saved with the form's settings */}
+					<Select value={theme} onValueChange={(value) => setTheme(value as Theme)}>
+						<SelectTrigger id="theme">
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="light">
+								<Trans>Light</Trans>
+							</SelectItem>
+							<SelectItem value="dark">
+								<Trans>Dark</Trans>
+							</SelectItem>
+							<SelectItem value="system">
+								<Trans>System</Trans>
+							</SelectItem>
 						</SelectContent>
 					</Select>
 				</div>
