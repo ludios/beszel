@@ -31,7 +31,7 @@ import {
 	Trash2Icon,
 	XIcon,
 } from "lucide-react"
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -134,7 +134,7 @@ export const createColumns = (
 		cell: ({ getValue }) => {
 			const allSystems = useStore($allSystemsById)
 			return (
-				<div className="ms-1.5 relative w-fit max-w-44">
+				<div className="relative w-fit max-w-44">
 					<span className="invisible block whitespace-nowrap" aria-hidden="true">
 						{longestName}
 					</span>
@@ -148,7 +148,7 @@ export const createColumns = (
 		sortingFn: (a, b) => a.original.name.localeCompare(b.original.name),
 		header: ({ column }) => <HeaderButton column={column} name={t`Device`} Icon={HardDrive} />,
 		cell: ({ getValue }) => (
-			<div className="font-medium ms-1 relative w-fit max-w-44" title={getValue() as string}>
+			<div className="font-medium relative w-fit max-w-44" title={getValue() as string}>
 				<span className="invisible block whitespace-nowrap" aria-hidden="true">
 					{longestDevice}
 				</span>
@@ -163,7 +163,7 @@ export const createColumns = (
 			<HeaderButton column={column} name={t({ message: "Model", comment: "Device model" })} Icon={Box} />
 		),
 		cell: ({ getValue }) => (
-			<div className="ms-1 relative w-fit max-w-44" title={getValue() as string}>
+			<div className="relative w-fit max-w-44" title={getValue() as string}>
 				<span className="invisible block whitespace-nowrap" aria-hidden="true">
 					{longestModel}
 				</span>
@@ -175,7 +175,7 @@ export const createColumns = (
 		accessorKey: "capacity",
 		invertSorting: true,
 		header: ({ column }) => <HeaderButton column={column} name={t`Capacity`} Icon={BinaryIcon} />,
-		cell: ({ getValue }) => <span className="ms-1">{formatCapacity(getValue() as number)}</span>,
+		cell: ({ getValue }) => formatCapacity(getValue() as number),
 	},
 	{
 		accessorKey: "state",
@@ -183,7 +183,7 @@ export const createColumns = (
 		cell: ({ getValue }) => {
 			const status = getValue() as string
 			return (
-				<Badge className="ms-1" variant={status === "PASSED" ? "success" : status === "FAILED" ? "danger" : "warning"}>
+				<Badge variant={status === "PASSED" ? "success" : status === "FAILED" ? "danger" : "warning"}>
 					{status}
 				</Badge>
 			)
@@ -194,7 +194,7 @@ export const createColumns = (
 		sortingFn: (a, b) => a.original.type.localeCompare(b.original.type),
 		header: ({ column }) => <HeaderButton column={column} name={t`Type`} Icon={ArrowLeftRightIcon} />,
 		cell: ({ getValue }) => (
-			<Badge variant="outline" className="ms-1 uppercase">
+			<Badge variant="outline" className="uppercase">
 				{getValue() as string}
 			</Badge>
 		),
@@ -208,13 +208,13 @@ export const createColumns = (
 		cell: ({ getValue }) => {
 			const hours = getValue() as number | undefined
 			if (hours == null) {
-				return <div className="text-sm text-muted-foreground ms-1">N/A</div>
+				return <div className="text-muted-foreground">N/A</div>
 			}
 			const seconds = hours * 3600
 			return (
-				<div className="text-sm ms-1">
-					<div>{secondsToString(seconds, "hour")}</div>
-					<div className="text-muted-foreground text-xs">{secondsToString(seconds, "day")}</div>
+				<div className="flex items-baseline gap-2">
+					{secondsToString(seconds, "hour")}
+					<span className="text-muted-foreground text-xs">{secondsToString(seconds, "day")}</span>
 				</div>
 			)
 		},
@@ -228,9 +228,9 @@ export const createColumns = (
 		cell: ({ getValue }) => {
 			const cycles = getValue() as number | undefined
 			if (cycles == null) {
-				return <div className="text-muted-foreground ms-1">N/A</div>
+				return <div className="text-muted-foreground">N/A</div>
 			}
-			return <span className="ms-1">{cycles.toLocaleString()}</span>
+			return cycles.toLocaleString()
 		},
 	},
 	{
@@ -240,10 +240,10 @@ export const createColumns = (
 		cell: ({ getValue }) => {
 			const temp = getValue() as number | null | undefined
 			if (!temp) {
-				return <div className="text-muted-foreground ms-1">N/A</div>
+				return <div className="text-muted-foreground">N/A</div>
 			}
 			const { value, unit } = formatTemperature(temp)
-			return <span className="ms-1">{`${value} ${unit}`}</span>
+			return `${value} ${unit}`
 		},
 	},
 	// {
@@ -268,7 +268,7 @@ export const createColumns = (
 			// if today, use hourWithSeconds, otherwise use formatShortDate
 			const formatter =
 				new Date(timestamp).toDateString() === new Date().toDateString() ? hourWithSeconds : formatShortDate
-			return <span className="ms-1 tabular-nums">{formatter(timestamp)}</span>
+			return <span className="tabular-nums">{formatter(timestamp)}</span>
 		},
 	},
 ]
@@ -286,7 +286,7 @@ function HeaderButton({
 	return (
 		<Button
 			className={cn(
-				"h-9 px-3 flex items-center gap-2 duration-50",
+				"h-7 px-1.5 py-0 flex items-center gap-2 duration-50",
 				isSorted && "bg-accent/70 light:bg-accent text-accent-foreground/90"
 			)}
 			variant="ghost"
@@ -465,7 +465,7 @@ export default function DisksTable({ systemId }: { systemId?: string }) {
 								<Button
 									variant="ghost"
 									size="icon"
-									className="size-10"
+									className="size-7"
 									onClick={(event) => event.stopPropagation()}
 									onMouseDown={(event) => event.stopPropagation()}
 								>
@@ -554,13 +554,8 @@ export default function DisksTable({ systemId }: { systemId?: string }) {
 		<div>
 			<Card className="@container w-full p-3">
 				<CardHeader className="p-0 mb-3">
-					<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
-						<div>
-							<CardTitle className="mb-2">S.M.A.R.T.</CardTitle>
-							<CardDescription className="flex">
-								<Trans>Click on a device to view more information.</Trans>
-							</CardDescription>
-						</div>
+					<div className="flex gap-3 w-full items-center">
+						<CardTitle>S.M.A.R.T.</CardTitle>
 						<div className="relative ms-auto w-full max-w-full md:w-64">
 							<Input
 								placeholder={t`Filter...`}
@@ -596,6 +591,15 @@ export default function DisksTable({ systemId }: { systemId?: string }) {
 	)
 }
 
+/**
+ * Height of a table row, in px. Must be at least as tall as the tallest cell content - the 28px
+ * actions button - plus the collapsed row border, or rows grow past the height the virtualizer
+ * reserved for them.
+ */
+const ROW_HEIGHT = 32
+/** Height of the table header, in px: an h-8 cell, which its collapsed bottom border doesn't add to. */
+const HEADER_HEIGHT = 32
+
 const SmartDevicesTable = memo(function SmartDevicesTable({
 	table,
 	rows,
@@ -613,7 +617,7 @@ const SmartDevicesTable = memo(function SmartDevicesTable({
 
 	const virtualizer = useVirtualizer<HTMLDivElement, HTMLTableRowElement>({
 		count: rows.length,
-		estimateSize: () => 65,
+		estimateSize: () => ROW_HEIGHT,
 		getScrollElement: () => scrollRef.current,
 		overscan: 5,
 	})
@@ -626,11 +630,11 @@ const SmartDevicesTable = memo(function SmartDevicesTable({
 		<div
 			className={cn(
 				"h-min max-h-[calc(100dvh-17rem)] max-w-full relative overflow-auto rounded-md border",
-				(!rows.length || rows.length > 2) && "min-h-50"
+				!rows.length && "min-h-46"
 			)}
 			ref={scrollRef}
 		>
-			<div style={{ height: `${virtualizer.getTotalSize() + 48}px`, paddingTop, paddingBottom }}>
+			<div style={{ height: `${virtualizer.getTotalSize() + HEADER_HEIGHT}px`, paddingTop, paddingBottom }}>
 				<table className="w-full text-sm text-nowrap">
 					<SmartTableHead table={table} />
 					<TableBody>
@@ -661,7 +665,7 @@ function SmartTableHead({ table }: { table: TableType<SmartDeviceRecord> }) {
 			{table.getHeaderGroups().map((headerGroup) => (
 				<TableRow key={headerGroup.id}>
 					{headerGroup.headers.map((header) => (
-						<TableHead key={header.id} className="px-2">
+						<TableHead key={header.id} className="h-8 px-1.5">
 							{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 						</TableHead>
 					))}
@@ -689,7 +693,7 @@ const SmartDeviceTableRow = memo(function SmartDeviceTableRow({
 			{row.getVisibleCells().map((cell) => (
 				<TableCell
 					key={cell.id}
-					className="md:ps-5 py-0"
+					className="py-0 px-3"
 					style={{
 						height: virtualRow.size,
 					}}
