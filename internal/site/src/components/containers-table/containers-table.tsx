@@ -21,7 +21,7 @@ import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/compon
 import { pb } from "@/lib/api"
 import type { ContainerRecord } from "@/types"
 import { containerChartCols } from "@/components/containers-table/containers-table-columns"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardTitle } from "@/components/ui/card"
 import { type ContainerHealth, ContainerHealthLabels } from "@/lib/enums"
 import { cn, useBrowserStorage } from "@/lib/utils"
 import { Sheet, SheetTitle, SheetHeader, SheetContent, SheetDescription } from "../ui/sheet"
@@ -167,38 +167,31 @@ export default function ContainersTable({ systemId }: { systemId?: string }) {
 
 	return (
 		<Card className="@container w-full p-3">
-			<CardHeader className="p-0 mb-3">
-				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
-					<div>
-						<CardTitle className="mb-2">
-							<Trans>All containers</Trans>
-						</CardTitle>
-						<CardDescription className="flex">
-							<Trans>Click on a container to view more information.</Trans>
-						</CardDescription>
-					</div>
-					<div className="relative ms-auto w-full max-w-full md:w-64">
-						<Input
-							placeholder={t`Filter...`}
-							value={globalFilter}
-							onChange={(e) => setGlobalFilter(e.target.value)}
-							className="ps-4 pe-10 w-full"
-						/>
-						{globalFilter && (
-							<Button
-								type="button"
-								variant="ghost"
-								size="icon"
-								aria-label={t`Clear`}
-								className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
-								onClick={() => setGlobalFilter("")}
-							>
-								<XIcon className="h-4 w-4" />
-							</Button>
-						)}
-					</div>
+			<div className="grid md:flex gap-x-5 gap-y-3 items-center mb-3">
+				<CardTitle>
+					<Trans>Containers</Trans>
+				</CardTitle>
+				<div className="relative ms-auto w-full max-w-full md:w-64">
+					<Input
+						placeholder={t`Filter...`}
+						value={globalFilter}
+						onChange={(e) => setGlobalFilter(e.target.value)}
+						className="ps-4 pe-10 w-full"
+					/>
+					{globalFilter && (
+						<Button
+							type="button"
+							variant="ghost"
+							size="icon"
+							aria-label={t`Clear`}
+							className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 text-muted-foreground"
+							onClick={() => setGlobalFilter("")}
+						>
+							<XIcon className="h-4 w-4" />
+						</Button>
+					)}
 				</div>
-			</CardHeader>
+			</div>
 			<div className="rounded-md">
 				<AllContainersTable table={table} rows={rows} colLength={visibleColumns.length} data={data} />
 			</div>

@@ -102,7 +102,7 @@ export default function Navbar() {
 								className="flex items-center"
 							>
 								<ContainerIcon className="h-4 w-4 me-2.5" strokeWidth={1.5} />
-								<Trans>All containers</Trans>
+								<Trans>Containers</Trans>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => navigate(getPagePath($router, "smart"))} className="flex items-center">
 								<HardDriveIcon className="h-4 w-4 me-2.5" strokeWidth={1.5} />
@@ -171,7 +171,7 @@ export default function Navbar() {
 						</Link>
 					</TooltipTrigger>
 					<TooltipContent>
-						<Trans>All containers</Trans>
+						<Trans>Containers</Trans>
 					</TooltipContent>
 				</Tooltip>
 				<Tooltip>

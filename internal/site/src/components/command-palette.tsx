@@ -105,7 +105,7 @@ export default memo(function CommandPalette({ open, setOpen }: { open: boolean; 
 						>
 							<ContainerIcon className="me-2 size-4" />
 							<span>
-								<Trans>All containers</Trans>
+								<Trans>Containers</Trans>
 							</span>
 							<CommandShortcut>
 								<Trans>Page</Trans>
