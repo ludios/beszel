@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { t } from "@lingui/core/macro"
 import { Fragment, type ReactNode, useRef, useMemo } from "react"
 import AreaChartDefault, { type DataPoint } from "@/components/charts/area-chart"
@@ -21,21 +22,19 @@ export function GpuPowerChart({
 	const statsRef = useRef(chartData.systemStats)
 	statsRef.current = chartData.systemStats
 
-	// Derive GPU power config key (cheap per render)
-	let gpuPowerKey = ""
-	for (let i = chartData.systemStats.length - 1; i >= 0; i--) {
-		const gpus = chartData.systemStats[i].stats?.g
-		if (gpus) {
-			const parts: string[] = []
-			for (const id in gpus) {
-				const gpu = gpus[id] as GPUData
-				if (gpu.p !== undefined) parts.push(`${id}:${gpu.n}`)
-				if (gpu.pp !== undefined) parts.push(`${id}:${gpu.n}${packageKey}`)
-			}
-			gpuPowerKey = parts.sort().join("\0")
-			break
+	// Derive GPU power config key from every sample, not just the latest: zero readings are
+	// omitted from stored stats, so a GPU idling at 0 W lacks p/pp in its newest samples
+	const power_series = new Set<string>()
+	for (const record of chartData.systemStats) {
+		const gpus = record.stats?.g
+		if (!gpus) continue
+		for (const id in gpus) {
+			const gpu = gpus[id] as GPUData
+			if (gpu.p !== undefined) power_series.add(`${id}:${gpu.n}`)
+			if (gpu.pp !== undefined) power_series.add(`${id}:${gpu.n}${packageKey}`)
 		}
 	}
+	const gpuPowerKey = [...power_series].sort().join("\0")
 
 	const dataPoints = useMemo((): DataPoint[] => {
 		if (!gpuPowerKey) return []
