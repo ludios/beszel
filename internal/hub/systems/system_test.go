@@ -1,4 +1,5 @@
 // Model-output: Claude Fable 5
+// Model-output: Claude Opus 5.5
 
 //go:build testing
 
@@ -53,7 +54,7 @@ func TestCombinedData_MigrateDeprecatedFields(t *testing.T) {
 		if cd.Details.Os != system.Linux {
 			t.Errorf("expected Os Linux, got %d", cd.Details.Os)
 		}
-		expectedMem := uint64(16 * 1e9)
+		expectedMem := uint64(16 * (1 << 30)) // pre-Details agents sent GiB
 		if cd.Details.MemoryTotal != expectedMem {
 			t.Errorf("expected MemoryTotal %d, got %d", expectedMem, cd.Details.MemoryTotal)
 		}

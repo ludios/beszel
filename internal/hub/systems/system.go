@@ -1,4 +1,5 @@
 // Model-output: Claude Fable 5
+// Model-output: Claude Opus 5.5
 
 package systems
 
@@ -1071,7 +1072,7 @@ func migrateDeprecatedFields(cd *system.CombinedData, createDetails bool) {
 				CpuModel:    cd.Info.CpuModel,
 				Podman:      cd.Info.Podman,
 				Os:          cd.Info.Os,
-				MemoryTotal: uint64(cd.Stats.Mem * 1e9),
+				MemoryTotal: uint64(cd.Stats.Mem * (1 << 30)), // agents that predate Details sent Mem in GiB
 			}
 		}
 		// zero the deprecated fields to prevent saving them in systems.info DB json payload
