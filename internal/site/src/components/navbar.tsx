@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { Trans } from "@lingui/react/macro"
 import { getPagePath } from "@nanostores/router"
 import {
@@ -48,7 +49,7 @@ export default function Navbar() {
 	const AdminLinks = AdminDropdownGroup()
 
 	return (
-		<div className="flex items-center h-14 md:h-16 bg-card px-4 pe-3 sm:px-6 border border-border/60 bt-0 rounded-md my-4">
+		<div className="flex items-center bg-card p-3 border border-border/60 rounded-md my-4">
 			<Suspense>
 				<CommandPalette open={commandPaletteOpen} setOpen={setCommandPaletteOpen} />
 			</Suspense>
