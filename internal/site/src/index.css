@@ -175,6 +175,17 @@
 		cursor: pointer;
 	}
 
+	/* a table header cell's button (e.g. sort) takes clicks anywhere in the cell */
+	th:has(> button) {
+		position: relative;
+	}
+
+	th > button::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+	}
+
 	/* cosmetic patch for half pixel gap in table headers when scrolling content shows at top  */
 	thead.sticky:before {
 		content: "";
