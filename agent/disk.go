@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 package agent
 
 import (
@@ -706,12 +708,10 @@ func (a *Agent) updateDiskIo(cacheTimeMs uint16, systemStats *system.Stats) {
 
 			diskIORead := (d.ReadBytes - prev.readBytes) * 1000 / msElapsed
 			diskIOWrite := (d.WriteBytes - prev.writeBytes) * 1000 / msElapsed
-			readMbPerSecond := utils.BytesToMegabytes(float64(diskIORead))
-			writeMbPerSecond := utils.BytesToMegabytes(float64(diskIOWrite))
 
-			// validate values
-			if readMbPerSecond > 50_000 || writeMbPerSecond > 50_000 {
-				slog.Warn("Invalid disk I/O. Resetting.", "name", d.Name, "read", readMbPerSecond, "write", writeMbPerSecond)
+			// validate values; more than 50 GB/s on one device means a counter glitch
+			if diskIORead > 50e9 || diskIOWrite > 50e9 {
+				slog.Warn("Invalid disk I/O. Resetting.", "name", d.Name, "readBytes", diskIORead, "writeBytes", diskIOWrite)
 				// also refresh agent baseline to avoid future negatives
 				a.initializeDiskIoStats(ioCounters)
 				continue
@@ -751,8 +751,6 @@ func (a *Agent) updateDiskIo(cacheTimeMs uint16, systemStats *system.Stats) {
 			a.setDiskBaseline(name, prevDiskFromCounter(d, now))
 			stats.TotalRead = d.ReadBytes
 			stats.TotalWrite = d.WriteBytes
-			stats.DiskReadPs = readMbPerSecond
-			stats.DiskWritePs = writeMbPerSecond
 			stats.DiskReadBytes = diskIORead
 			stats.DiskWriteBytes = diskIOWrite
 			stats.DiskIoStats[0] = diskReadTime
@@ -763,8 +761,6 @@ func (a *Agent) updateDiskIo(cacheTimeMs uint16, systemStats *system.Stats) {
 			stats.DiskIoStats[5] = diskWeightedIO
 
 			if stats.Root {
-				systemStats.DiskReadPs = stats.DiskReadPs
-				systemStats.DiskWritePs = stats.DiskWritePs
 				systemStats.DiskIO[0] = diskIORead
 				systemStats.DiskIO[1] = diskIOWrite
 				systemStats.DiskIOTotal[0] = d.ReadBytes

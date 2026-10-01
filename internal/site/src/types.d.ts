@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 import type { RecordModel } from "pocketbase"
 import type { Unit, Os, BatteryState, HourFormat, ConnectionType, ServiceStatus, ServiceSubState } from "@/lib/enums"
 
@@ -126,14 +128,6 @@ export interface SystemStats {
 	du: number
 	/** disk percent */
 	dp: number
-	/** disk read (mb) */
-	dr: number
-	/** disk write (mb) */
-	dw: number
-	/** max disk read (mb) */
-	drm?: number
-	/** max disk write (mb) */
-	dwm?: number
 	/** disk I/O bytes [read, write] */
 	dio?: [number, number]
 	/** max disk I/O bytes [read, write] */
@@ -144,17 +138,9 @@ export interface SystemStats {
 	diosm?: [number, number, number, number, number, number]
 	/** cumulative device I/O bytes [total read, total write] */
 	diot?: [number, number]
-	/** network sent (mb) */
-	ns: number
-	/** network received (mb) */
-	nr: number
 	/** bandwidth bytes [sent, recv] */
 	b?: [number, number]
-	/** max network sent (mb) */
-	nsm?: number
-	/** max network received (mb) */
-	nrm?: number
-	/** max network sent (bytes) */
+	/** max bandwidth bytes [sent, recv] */
 	bm?: [number, number]
 	/** temperatures */
 	t?: Record<string, number>
@@ -200,9 +186,9 @@ export interface ZfsPool {
 	hu?: boolean
 	hi?: boolean
 	raw?: boolean
-	/** total capacity (GiB) */
+	/** total capacity (GB) */
 	d: number
-	/** allocated (GiB) */
+	/** allocated (GB) */
 	du: number
 	/** read throughput (bytes/s) */
 	rb?: number
@@ -275,21 +261,13 @@ export interface ExtraFsStats {
 	d: number
 	/** disk used (gb) */
 	du: number
-	/** total read (mb) */
-	r: number
-	/** total write (mb) */
-	w: number
-	/** max read (mb) */
-	rm: number
-	/** max write (mb) */
-	wm: number
 	/** read per second (bytes) */
 	rb: number
 	/** write per second (bytes) */
 	wb: number
 	/** max read per second (bytes) */
 	rbm: number
-	/** max write per second (mb) */
+	/** max write per second (bytes) */
 	wbm: number
 	/** disk io stats [read time factor, write time factor, io utilization %, r_await ms, w_await ms, weighted io %] */
 	dios?: [number, number, number, number, number, number]
@@ -314,10 +292,6 @@ interface ContainerStats {
 	c: number
 	/** memory used (mb) */
 	m: number
-	// network sent (mb)
-	ns?: number
-	// network received (mb)
-	nr?: number
 	/** bandwidth bytes [sent, recv] */
 	b?: [number, number]
 }

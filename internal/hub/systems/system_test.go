@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 //go:build testing
 
 package systems
@@ -10,69 +12,6 @@ import (
 )
 
 func TestCombinedData_MigrateDeprecatedFields(t *testing.T) {
-	t.Run("Migrate NetworkSent and NetworkRecv to Bandwidth", func(t *testing.T) {
-		cd := &system.CombinedData{
-			Stats: system.Stats{
-				NetworkSent: 1.5, // 1.5 MB
-				NetworkRecv: 2.5, // 2.5 MB
-			},
-		}
-		migrateDeprecatedFields(cd, true)
-
-		expectedSent := uint64(1.5 * 1024 * 1024)
-		expectedRecv := uint64(2.5 * 1024 * 1024)
-
-		if cd.Stats.Bandwidth[0] != expectedSent {
-			t.Errorf("expected Bandwidth[0] %d, got %d", expectedSent, cd.Stats.Bandwidth[0])
-		}
-		if cd.Stats.Bandwidth[1] != expectedRecv {
-			t.Errorf("expected Bandwidth[1] %d, got %d", expectedRecv, cd.Stats.Bandwidth[1])
-		}
-		if cd.Stats.NetworkSent != 0 || cd.Stats.NetworkRecv != 0 {
-			t.Errorf("expected NetworkSent and NetworkRecv to be reset, got %f, %f", cd.Stats.NetworkSent, cd.Stats.NetworkRecv)
-		}
-	})
-
-	t.Run("Migrate Info.Bandwidth to Info.BandwidthBytes", func(t *testing.T) {
-		cd := &system.CombinedData{
-			Info: system.Info{
-				Bandwidth: 10.0, // 10 MB
-			},
-		}
-		migrateDeprecatedFields(cd, true)
-
-		expected := uint64(10 * 1024 * 1024)
-		if cd.Info.BandwidthBytes != expected {
-			t.Errorf("expected BandwidthBytes %d, got %d", expected, cd.Info.BandwidthBytes)
-		}
-		if cd.Info.Bandwidth != 0 {
-			t.Errorf("expected Info.Bandwidth to be reset, got %f", cd.Info.Bandwidth)
-		}
-	})
-
-	t.Run("Migrate DiskReadPs and DiskWritePs to DiskIO", func(t *testing.T) {
-		cd := &system.CombinedData{
-			Stats: system.Stats{
-				DiskReadPs:  3.0, // 3 MB
-				DiskWritePs: 4.0, // 4 MB
-			},
-		}
-		migrateDeprecatedFields(cd, true)
-
-		expectedRead := uint64(3 * 1024 * 1024)
-		expectedWrite := uint64(4 * 1024 * 1024)
-
-		if cd.Stats.DiskIO[0] != expectedRead {
-			t.Errorf("expected DiskIO[0] %d, got %d", expectedRead, cd.Stats.DiskIO[0])
-		}
-		if cd.Stats.DiskIO[1] != expectedWrite {
-			t.Errorf("expected DiskIO[1] %d, got %d", expectedWrite, cd.Stats.DiskIO[1])
-		}
-		if cd.Stats.DiskReadPs != 0 || cd.Stats.DiskWritePs != 0 {
-			t.Errorf("expected DiskReadPs and DiskWritePs to be reset, got %f, %f", cd.Stats.DiskReadPs, cd.Stats.DiskWritePs)
-		}
-	})
-
 	t.Run("Migrate Info fields to Details struct", func(t *testing.T) {
 		cd := &system.CombinedData{
 			Stats: system.Stats{
@@ -114,7 +53,7 @@ func TestCombinedData_MigrateDeprecatedFields(t *testing.T) {
 		if cd.Details.Os != system.Linux {
 			t.Errorf("expected Os Linux, got %d", cd.Details.Os)
 		}
-		expectedMem := uint64(16 * 1024 * 1024 * 1024)
+		expectedMem := uint64(16 * 1e9)
 		if cd.Details.MemoryTotal != expectedMem {
 			t.Errorf("expected MemoryTotal %d, got %d", expectedMem, cd.Details.MemoryTotal)
 		}

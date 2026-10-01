@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 import { t } from "@lingui/core/macro"
 import AreaChartDefault from "@/components/charts/area-chart"
 import { decimalString, formatBytes, toFixedFloat } from "@/lib/utils"
@@ -35,27 +37,27 @@ export const diskDataFns = {
 		({ stats }: SystemStatsRecord) =>
 			stats?.efs?.[name]?.du ?? 0,
 	// throughput
-	read: ({ stats }: SystemStatsRecord) => stats?.dio?.[0] ?? (stats?.dr ?? 0) * 1024 * 1024,
-	readMax: ({ stats }: SystemStatsRecord) => stats?.diom?.[0] ?? (stats?.drm ?? 0) * 1024 * 1024,
-	write: ({ stats }: SystemStatsRecord) => stats?.dio?.[1] ?? (stats?.dw ?? 0) * 1024 * 1024,
-	writeMax: ({ stats }: SystemStatsRecord) => stats?.diom?.[1] ?? (stats?.dwm ?? 0) * 1024 * 1024,
+	read: ({ stats }: SystemStatsRecord) => stats?.dio?.[0] ?? 0,
+	readMax: ({ stats }: SystemStatsRecord) => stats?.diom?.[0] ?? 0,
+	write: ({ stats }: SystemStatsRecord) => stats?.dio?.[1] ?? 0,
+	writeMax: ({ stats }: SystemStatsRecord) => stats?.diom?.[1] ?? 0,
 	// extra fs throughput
 	extraRead:
 		(name: string) =>
 		({ stats }: SystemStatsRecord) =>
-			stats?.efs?.[name]?.rb ?? (stats?.efs?.[name]?.r ?? 0) * 1024 * 1024,
+			stats?.efs?.[name]?.rb ?? 0,
 	extraReadMax:
 		(name: string) =>
 		({ stats }: SystemStatsRecord) =>
-			stats?.efs?.[name]?.rbm ?? (stats?.efs?.[name]?.rm ?? 0) * 1024 * 1024,
+			stats?.efs?.[name]?.rbm ?? 0,
 	extraWrite:
 		(name: string) =>
 		({ stats }: SystemStatsRecord) =>
-			stats?.efs?.[name]?.wb ?? (stats?.efs?.[name]?.w ?? 0) * 1024 * 1024,
+			stats?.efs?.[name]?.wb ?? 0,
 	extraWriteMax:
 		(name: string) =>
 		({ stats }: SystemStatsRecord) =>
-			stats?.efs?.[name]?.wbm ?? (stats?.efs?.[name]?.wm ?? 0) * 1024 * 1024,
+			stats?.efs?.[name]?.wbm ?? 0,
 	// cumulative totals
 	totalRead: ({ stats }: SystemStatsRecord) => stats?.diot?.[0] ?? 0,
 	totalWrite: ({ stats }: SystemStatsRecord) => stats?.diot?.[1] ?? 0,
@@ -135,11 +137,11 @@ export function DiskUsageChart({ systemData, extraFsName }: { systemData: System
 				chartData={chartData}
 				domain={[0, diskSize]}
 				tickFormatter={(val) => {
-					const { value, unit } = formatBytes(val * 1024, false, Unit.Bytes, true)
+					const { value, unit } = formatBytes(val * 1000, false, Unit.Bytes, true)
 					return `${toFixedFloat(value, value >= 10 ? 0 : 1)} ${unit}`
 				}}
 				contentFormatter={({ value }) => {
-					const { value: convertedValue, unit } = formatBytes(value * 1024, false, Unit.Bytes, true)
+					const { value: convertedValue, unit } = formatBytes(value * 1000, false, Unit.Bytes, true)
 					return `${decimalString(convertedValue)} ${unit}`
 				}}
 				dataPoints={[

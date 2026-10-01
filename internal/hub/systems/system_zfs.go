@@ -166,7 +166,7 @@ func (sys *System) syncZfsPoolHealth(app core.App, pools map[string]*system.ZfsP
 	if err != nil {
 		return err
 	}
-	const gib = 1024 * 1024 * 1024
+	const gb = 1e9
 	for name, pool := range pools {
 		if pool == nil {
 			continue
@@ -184,9 +184,9 @@ func (sys *System) syncZfsPoolHealth(app core.App, pools map[string]*system.ZfsP
 			record.Set("display_name", pool.DisplayName)
 			record.Set("health", pool.Health)
 			record.Set("raw", pool.Raw)
-			record.Set("size", uint64(pool.Total*gib))
-			record.Set("alloc", uint64(pool.Used*gib))
-			record.Set("free", uint64(max(pool.Total-pool.Used, 0)*gib))
+			record.Set("size", uint64(pool.Total*gb))
+			record.Set("alloc", uint64(pool.Used*gb))
+			record.Set("free", uint64(max(pool.Total-pool.Used, 0)*gb))
 			if err := app.SaveNoValidate(record); err != nil {
 				return fmt.Errorf("creating ZFS pool summary %q: %w", name, err)
 			}
@@ -198,9 +198,9 @@ func (sys *System) syncZfsPoolHealth(app core.App, pools map[string]*system.ZfsP
 		record.Set("display_name", pool.DisplayName)
 		record.Set("health", pool.Health)
 		record.Set("raw", pool.Raw)
-		record.Set("size", uint64(pool.Total*gib))
-		record.Set("alloc", uint64(pool.Used*gib))
-		record.Set("free", uint64(max(pool.Total-pool.Used, 0)*gib))
+		record.Set("size", uint64(pool.Total*gb))
+		record.Set("alloc", uint64(pool.Used*gb))
+		record.Set("free", uint64(max(pool.Total-pool.Used, 0)*gb))
 		if err := app.SaveNoValidate(record); err != nil {
 			return fmt.Errorf("updating ZFS pool health %q: %w", name, err)
 		}

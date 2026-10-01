@@ -51,11 +51,11 @@ export function ZfsPoolUsageChart({ systemData, poolName }: { systemData: System
 				domain={[0, poolTotal]}
 				showTotal={true}
 				tickFormatter={(val) => {
-					const { value, unit } = formatBytes(val * 1024, false, Unit.Bytes, true)
+					const { value, unit } = formatBytes(val * 1000, false, Unit.Bytes, true)
 					return `${toFixedFloat(value, value >= 10 ? 0 : 1)} ${unit}`
 				}}
 				contentFormatter={({ value }) => {
-					const { value: convertedValue, unit } = formatBytes(value * 1024, false, Unit.Bytes, true)
+					const { value: convertedValue, unit } = formatBytes(value * 1000, false, Unit.Bytes, true)
 					return `${decimalString(convertedValue, convertedValue >= 100 ? 1 : 2)} ${unit}`
 				}}
 				dataPoints={[

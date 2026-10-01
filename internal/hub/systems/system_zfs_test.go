@@ -174,7 +174,7 @@ func TestSyncZfsPoolHealthWritesOnlyTransitions(t *testing.T) {
 	require.NoError(t, err)
 	firstUpdated := record.GetDateTime("updated")
 	assert.Equal(t, "ONLINE", record.GetString("health"))
-	assert.EqualValues(t, 100*1024*1024*1024, record.GetInt("size"))
+	assert.EqualValues(t, 100*1e9, record.GetInt("size"))
 
 	require.NoError(t, sys.syncZfsPoolHealth(app, map[string]*system.ZfsPool{
 		"tank": {Total: 100, Used: 30, Health: "ONLINE"},
@@ -201,7 +201,7 @@ func TestZfsRawCapacityPersistence(t *testing.T) {
 	record, err = app.FindRecordById("zfs_pools", record.Id)
 	require.NoError(t, err)
 	assert.False(t, record.GetBool("raw"))
-	assert.EqualValues(t, 1024*1024*1024, record.GetInt("size"))
+	assert.EqualValues(t, 1e9, record.GetInt("size"))
 }
 
 func TestBtrfsDisplayNameKeepsRecordIdentity(t *testing.T) {

@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 //go:build amd64 && (windows || (linux && glibc))
 
 package agent
@@ -10,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/ebitengine/purego"
+	"github.com/henrygd/beszel/agent/utils"
 	"github.com/henrygd/beszel/internal/entities/system"
 )
 
@@ -204,8 +207,8 @@ func (c *nvmlCollector) collect() {
 				}
 			}
 			if totalMem > 0 {
-				gpu.MemoryUsed = float64(usedMem) / 1024 / 1024 / mebibytesInAMegabyte
-				gpu.MemoryTotal = float64(totalMem) / 1024 / 1024 / mebibytesInAMegabyte
+				gpu.MemoryUsed = utils.BytesToMegabytes(float64(usedMem))
+				gpu.MemoryTotal = utils.BytesToMegabytes(float64(totalMem))
 			}
 		} else {
 			slog.Debug("NVML: Skipping memory info (utilization=0)", "bdf", bdf)

@@ -135,7 +135,7 @@ func TestImageUpdateCacheAndStats(t *testing.T) {
 	require.Equal(t, failedInspections, inspections.Load())
 	for _, stat := range stats {
 		require.False(t, stat.UpdateAvailable)
-		require.Equal(t, 1.0, stat.Mem)
+		require.Equal(t, 1.05, stat.Mem) // 1048576 bytes in SI MB
 	}
 }
 

@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 //go:build testing
 
 package systems_test
@@ -358,23 +360,22 @@ func testOld(t *testing.T, hub *tests.TestHub) {
 				CpuModel: "Test CPU",
 			},
 			Info: system.Info{
-				Uptime:       3600,
-				Cpu:          25.5,
-				MemPct:       40.2,
-				DiskPct:      60.0,
-				Bandwidth:    100.0,
-				AgentVersion: "1.0.0",
+				Uptime:         3600,
+				Cpu:            25.5,
+				MemPct:         40.2,
+				DiskPct:        60.0,
+				BandwidthBytes: 100_000_000,
+				AgentVersion:   "1.0.0",
 			},
 			Stats: system.Stats{
-				Cpu:         25.5,
-				Mem:         16384.0,
-				MemUsed:     6553.6,
-				MemPct:      40.0,
-				DiskTotal:   1024000.0,
-				DiskUsed:    614400.0,
-				DiskPct:     60.0,
-				NetworkSent: 1024.0,
-				NetworkRecv: 2048.0,
+				Cpu:       25.5,
+				Mem:       16384.0,
+				MemUsed:   6553.6,
+				MemPct:    40.0,
+				DiskTotal: 1024000.0,
+				DiskUsed:  614400.0,
+				DiskPct:   60.0,
+				Bandwidth: [2]uint64{1_024_000_000, 2_048_000_000},
 			},
 			Containers: []*container.Stats{},
 		}

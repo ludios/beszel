@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 import { plural, t } from "@lingui/core/macro"
 import { type ClassValue, clsx } from "clsx"
 import { listenKeys } from "nanostores"
@@ -265,7 +267,7 @@ export function formatBytes(
 	isMegabytes = false
 ): { value: number; unit: string } {
 	// Convert MB to bytes if isMegabytes is true
-	if (isMegabytes) size *= 1024 * 1024
+	if (isMegabytes) size *= 1e6
 
 	// biome-ignore lint/suspicious/noDoubleEquals: need loose equality check due to form data being strings
 	if (unit == Unit.Bits) {
@@ -288,22 +290,22 @@ export function formatBytes(
 			unit: `Tb${suffix}`,
 		}
 	}
-	// bytes
+	// bytes (SI decimal units)
 	const suffix = perSecond ? "/s" : ""
-	if (size < 100) return { value: size, unit: `B${suffix}` }
-	if (size < 1000 * 1024) return { value: size / 1024, unit: `KB${suffix}` }
-	if (size < 1000 * 1024 ** 2)
+	if (size < 1000) return { value: size, unit: `B${suffix}` }
+	if (size < 1e6) return { value: size / 1e3, unit: `KB${suffix}` }
+	if (size < 1e9)
 		return {
-			value: size / 1024 ** 2,
+			value: size / 1e6,
 			unit: `MB${suffix}`,
 		}
-	if (size < 1000 * 1024 ** 3)
+	if (size < 1e12)
 		return {
-			value: size / 1024 ** 3,
+			value: size / 1e9,
 			unit: `GB${suffix}`,
 		}
 	return {
-		value: size / 1024 ** 4,
+		value: size / 1e12,
 		unit: `TB${suffix}`,
 	}
 }

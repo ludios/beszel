@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 //go:build testing
 
 package agent
@@ -32,8 +34,8 @@ func TestParseNvidiaData(t *testing.T) {
 				"0": {
 					Name:        "GeForce RTX 3050 Ti",
 					Temperature: 48.0,
-					MemoryUsed:  12.0 / 1.024,
-					MemoryTotal: 4096.0 / 1.024,
+					MemoryUsed:  12.0 * 1.048576,
+					MemoryTotal: 4096.0 * 1.048576,
 					Usage:       26.3,
 					Power:       12.73,
 					Count:       1,
@@ -41,8 +43,8 @@ func TestParseNvidiaData(t *testing.T) {
 				"1": {
 					Name:        "A100-PCIE-40GB",
 					Temperature: 38.0,
-					MemoryUsed:  74.0 / 1.024,
-					MemoryTotal: 40960.0 / 1.024,
+					MemoryUsed:  74.0 * 1.048576,
+					MemoryTotal: 40960.0 * 1.048576,
 					Usage:       0.0,
 					Power:       36.79,
 					Count:       1,
@@ -60,8 +62,8 @@ func TestParseNvidiaData(t *testing.T) {
 				"0": {
 					Name:        "A10",
 					Temperature: 45.0,
-					MemoryUsed:  19676.0 / 1.024,
-					MemoryTotal: 23028.0 / 1.024,
+					MemoryUsed:  19676.0 * 1.048576,
+					MemoryTotal: 23028.0 * 1.048576,
 					Usage:       0.0,
 					Power:       58.98,
 					Count:       1,
@@ -69,8 +71,8 @@ func TestParseNvidiaData(t *testing.T) {
 				"1": {
 					Name:        "A10",
 					Temperature: 45.0,
-					MemoryUsed:  19638.0 / 1.024,
-					MemoryTotal: 23028.0 / 1.024,
+					MemoryUsed:  19638.0 * 1.048576,
+					MemoryTotal: 23028.0 * 1.048576,
 					Usage:       0.0,
 					Power:       62.35,
 					Count:       1,
@@ -78,8 +80,8 @@ func TestParseNvidiaData(t *testing.T) {
 				"2": {
 					Name:        "A10",
 					Temperature: 44.0,
-					MemoryUsed:  21700.0 / 1.024,
-					MemoryTotal: 23028.0 / 1.024,
+					MemoryUsed:  21700.0 * 1.048576,
+					MemoryTotal: 23028.0 * 1.048576,
 					Usage:       0.0,
 					Power:       59.57,
 					Count:       1,
@@ -87,8 +89,8 @@ func TestParseNvidiaData(t *testing.T) {
 				"3": {
 					Name:        "A10",
 					Temperature: 45.0,
-					MemoryUsed:  18222.0 / 1.024,
-					MemoryTotal: 23028.0 / 1.024,
+					MemoryUsed:  18222.0 * 1.048576,
+					MemoryTotal: 23028.0 * 1.048576,
 					Usage:       0.0,
 					Power:       61.76,
 					Count:       1,
@@ -159,8 +161,8 @@ func TestParseAmdData(t *testing.T) {
 				"34756": {
 					Name:        "Rembrandt [Radeon 680M]",
 					Temperature: 47.0,
-					MemoryUsed:  482263040.0 / (1024 * 1024),
-					MemoryTotal: 536870912.0 / (1024 * 1024),
+					MemoryUsed:  482263040.0 / 1e6,
+					MemoryTotal: 536870912.0 / 1e6,
 					Usage:       0.0,
 					Power:       9.215,
 					Count:       1,
@@ -196,8 +198,8 @@ func TestParseAmdData(t *testing.T) {
 				"34756": {
 					Name:        "Rembrandt [Radeon 680M]",
 					Temperature: 47.0,
-					MemoryUsed:  482263040.0 / (1024 * 1024),
-					MemoryTotal: 536870912.0 / (1024 * 1024),
+					MemoryUsed:  482263040.0 / 1e6,
+					MemoryTotal: 536870912.0 / 1e6,
 					Usage:       0.0,
 					Power:       9.215,
 					Count:       1,
@@ -205,8 +207,8 @@ func TestParseAmdData(t *testing.T) {
 				"38294": {
 					Name:        "Navi 31 [Radeon RX 7900 XT]",
 					Temperature: 49.0,
-					MemoryUsed:  794341376.0 / (1024 * 1024),
-					MemoryTotal: 25753026560.0 / (1024 * 1024),
+					MemoryUsed:  794341376.0 / 1e6,
+					MemoryTotal: 25753026560.0 / 1e6,
 					Usage:       20.3,
 					Power:       19.0,
 					Count:       1,
@@ -357,8 +359,8 @@ func TestParseJetsonData(t *testing.T) {
 			input: "11-14-2024 22:54:33 RAM 4300/30698MB GR3D_FREQ 45% tj@52.468C VDD_GPU_SOC 2171mW",
 			wantMetrics: &system.GPUData{
 				Name:        "GPU",
-				MemoryUsed:  4300.0,
-				MemoryTotal: 30698.0,
+				MemoryUsed:  4300.0 * 1.048576,
+				MemoryTotal: 30698.0 * 1.048576,
 				Usage:       45.0,
 				Temperature: 52.468,
 				Power:       2.171,
@@ -370,8 +372,8 @@ func TestParseJetsonData(t *testing.T) {
 			input: "11-15-2024 08:38:09 RAM 6185/7620MB (lfb 8x2MB) SWAP 851/3810MB (cached 1MB) CPU [15%@729,11%@729,14%@729,13%@729,11%@729,8%@729] EMC_FREQ 43%@2133 GR3D_FREQ 63%@[621] NVDEC off NVJPG off NVJPG1 off VIC off OFA off APE 200 cpu@53.968C soc2@52.437C soc0@50.75C gpu@53.343C tj@53.968C soc1@51.656C VDD_IN 12479mW/12479mW VDD_CPU_GPU_CV 4667mW/4667mW VDD_SOC 2817mW/2817mW",
 			wantMetrics: &system.GPUData{
 				Name:        "GPU",
-				MemoryUsed:  6185.0,
-				MemoryTotal: 7620.0,
+				MemoryUsed:  6185.0 * 1.048576,
+				MemoryTotal: 7620.0 * 1.048576,
 				Usage:       63.0,
 				Temperature: 53.968,
 				Power:       4.667,
@@ -383,8 +385,8 @@ func TestParseJetsonData(t *testing.T) {
 			input: "06-18-2025 11:25:24 RAM 3452/7620MB (lfb 25x4MB) SWAP 1518/16384MB (cached 174MB) CPU [1%@1420,2%@1420,0%@1420,2%@1420,2%@729,1%@729] GR3D_FREQ 0% cpu@50.031C soc2@49.031C soc0@50C gpu@49.031C tj@50.25C soc1@50.25C VDD_IN 4824mW/4824mW VDD_CPU_GPU_CV 518mW/518mW VDD_SOC 1475mW/1475mW",
 			wantMetrics: &system.GPUData{
 				Name:        "GPU",
-				MemoryUsed:  3452.0,
-				MemoryTotal: 7620.0,
+				MemoryUsed:  3452.0 * 1.048576,
+				MemoryTotal: 7620.0 * 1.048576,
 				Usage:       0.0,
 				Temperature: 50.25,
 				Power:       0.518,
@@ -396,8 +398,8 @@ func TestParseJetsonData(t *testing.T) {
 			input: "11-14-2024 22:54:33 RAM 4300/30698MB GR3D_FREQ 45% VDD_GPU_SOC 2171mW",
 			wantMetrics: &system.GPUData{
 				Name:        "GPU",
-				MemoryUsed:  4300.0,
-				MemoryTotal: 30698.0,
+				MemoryUsed:  4300.0 * 1.048576,
+				MemoryTotal: 30698.0 * 1.048576,
 				Usage:       45.0,
 				Power:       2.171,
 				Count:       1,
@@ -408,8 +410,8 @@ func TestParseJetsonData(t *testing.T) {
 			input: "RAM 3276/7859MB (lfb 5x4MB) SWAP 1626/12122MB (cached 181MB) CPU [44%@1421,49%@2031,67%@2034,17%@1420,25%@1419,8%@1420] EMC_FREQ 1%@1866 GR3D_FREQ 0%@114 APE 150 MTS fg 1% bg 1% PLL@42.5C MCPU@42.5C PMIC@50C Tboard@38C GPU@39.5C BCPU@42.5C thermal@41.3C Tdiode@39.25C VDD_SYS_GPU 182/182 VDD_SYS_SOC 730/730 VDD_4V0_WIFI 0/0 VDD_IN 5297/5297 VDD_SYS_CPU 1917/1917 VDD_SYS_DDR 1241/1241",
 			wantMetrics: &system.GPUData{
 				Name:        "GPU",
-				MemoryUsed:  3276.0,
-				MemoryTotal: 7859.0,
+				MemoryUsed:  3276.0 * 1.048576,
+				MemoryTotal: 7859.0 * 1.048576,
 				Usage:       0.0,
 				Power:       0.182, // 182mW -> 0.182W
 				Temperature: 39.5,
@@ -1517,11 +1519,11 @@ func TestAccumulation(t *testing.T) {
 			},
 			expectedValues: map[string]expectedGPUValues{
 				"0": {
-					temperature: 70.5,  // Last value
-					memoryUsed:  1024,  // Last value
-					memoryTotal: 4096,  // Last value
-					usage:       120.0, // Accumulated: 30 + 40 + 50
-					power:       3.6,   // Accumulated: 1.0 + 1.2 + 1.4
+					temperature: 70.5,            // Last value
+					memoryUsed:  1024 * 1.048576, // Last value
+					memoryTotal: 4096 * 1.048576, // Last value
+					usage:       120.0,           // Accumulated: 30 + 40 + 50
+					power:       3.6,             // Accumulated: 1.0 + 1.2 + 1.4
 					count:       3,
 					avgUsage:    40.0, // 120 / 3
 					avgPower:    1.2,  // 3.6 / 3
@@ -1543,11 +1545,11 @@ func TestAccumulation(t *testing.T) {
 			},
 			expectedValues: map[string]expectedGPUValues{
 				"0": {
-					temperature: 70.0,            // Last value
-					memoryUsed:  7000.0 / 1.024,  // Last value
-					memoryTotal: 10000.0 / 1.024, // Last value
-					usage:       120.0,           // Accumulated: 30 + 40 + 50
-					power:       750.0,           // Accumulated: 200 + 250 + 300
+					temperature: 70.0,               // Last value
+					memoryUsed:  7000.0 * 1.048576,  // Last value
+					memoryTotal: 10000.0 * 1.048576, // Last value
+					usage:       120.0,              // Accumulated: 30 + 40 + 50
+					power:       750.0,              // Accumulated: 200 + 250 + 300
 					count:       3,
 					avgUsage:    40.0,  // 120 / 3
 					avgPower:    250.0, // 750 / 3
@@ -1569,11 +1571,11 @@ func TestAccumulation(t *testing.T) {
 			},
 			expectedValues: map[string]expectedGPUValues{
 				"34756": {
-					temperature: 70.0,                          // Last value
-					memoryUsed:  3221225472.0 / (1024 * 1024),  // Last value
-					memoryTotal: 10737418240.0 / (1024 * 1024), // Last value
-					usage:       120.0,                         // Accumulated: 30 + 40 + 50
-					power:       450.0,                         // Accumulated: 100 + 150 + 200
+					temperature: 70.0,                // Last value
+					memoryUsed:  3221225472.0 / 1e6,  // Last value
+					memoryTotal: 10737418240.0 / 1e6, // Last value
+					usage:       120.0,               // Accumulated: 30 + 40 + 50
+					power:       450.0,               // Accumulated: 100 + 150 + 200
 					count:       3,
 					avgUsage:    40.0,  // 120 / 3
 					avgPower:    150.0, // 450 / 3
@@ -1607,8 +1609,8 @@ func TestAccumulation(t *testing.T) {
 				}
 
 				assert.EqualValues(t, expected.temperature, gpu.Temperature, "Temperature should match")
-				assert.EqualValues(t, expected.memoryUsed, gpu.MemoryUsed, "Memory used should match")
-				assert.EqualValues(t, expected.memoryTotal, gpu.MemoryTotal, "Memory total should match")
+				assert.InDelta(t, expected.memoryUsed, gpu.MemoryUsed, 0.01, "Memory used should match")
+				assert.InDelta(t, expected.memoryTotal, gpu.MemoryTotal, 0.01, "Memory total should match")
 				assert.EqualValues(t, expected.usage, gpu.Usage, "Usage should match")
 				assert.EqualValues(t, expected.power, gpu.Power, "Power should match")
 				assert.Equal(t, expected.count, gpu.Count, "Count should match")

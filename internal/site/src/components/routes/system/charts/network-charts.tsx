@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 import { useMemo } from "react"
 import { t } from "@lingui/core/macro"
 import AreaChartDefault from "@/components/charts/area-chart"
@@ -52,9 +54,9 @@ export function BandwidthChart({
 						label: t`Sent`,
 						dataKey(data: SystemStatsRecord) {
 							if (showMax) {
-								return data?.stats?.bm?.[0] ?? (data?.stats?.nsm ?? 0) * 1024 * 1024
+								return data?.stats?.bm?.[0] ?? 0
 							}
-							return data?.stats?.b?.[0] ?? (data?.stats?.ns ?? 0) * 1024 * 1024
+							return data?.stats?.b?.[0] ?? 0
 						},
 						color: 5,
 						opacity: 0.2,
@@ -63,9 +65,9 @@ export function BandwidthChart({
 						label: t`Received`,
 						dataKey(data: SystemStatsRecord) {
 							if (showMax) {
-								return data?.stats?.bm?.[1] ?? (data?.stats?.nrm ?? 0) * 1024 * 1024
+								return data?.stats?.bm?.[1] ?? 0
 							}
-							return data?.stats?.b?.[1] ?? (data?.stats?.nr ?? 0) * 1024 * 1024
+							return data?.stats?.b?.[1] ?? 0
 						},
 						color: 2,
 						opacity: 0.2,
@@ -104,17 +106,17 @@ export function ContainerNetworkChart({
 	const { filter, dataPoints, filteredKeys } = useContainerDataPoints(networkConfig, (key, data) => {
 		const payload = data[key]
 		if (!payload) return null
-		const sent = payload?.b?.[0] ?? (payload?.ns ?? 0) * 1024 * 1024
-		const recv = payload?.b?.[1] ?? (payload?.nr ?? 0) * 1024 * 1024
+		const sent = payload?.b?.[0] ?? 0
+		const recv = payload?.b?.[1] ?? 0
 		return sent + recv
 	})
 
 	const contentFormatter = useMemo(() => {
-		const getRxTxBytes = (record?: { b?: [number, number]; ns?: number; nr?: number }) => {
+		const getRxTxBytes = (record?: { b?: [number, number] }) => {
 			if (record?.b?.length && record.b.length >= 2) {
 				return [Number(record.b[0]) || 0, Number(record.b[1]) || 0]
 			}
-			return [(record?.ns ?? 0) * 1024 * 1024, (record?.nr ?? 0) * 1024 * 1024]
+			return [0, 0]
 		}
 		const formatRxTx = (recv: number, sent: number) => {
 			const { value: receivedValue, unit: receivedUnit } = formatBytes(recv, true, userSettings.unitNet, false)

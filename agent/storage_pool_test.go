@@ -208,8 +208,8 @@ func TestUpdatePopulatesZfsPools(t *testing.T) {
 	zm.Update(&stats)
 	require.NotNil(t, stats.ZfsPools)
 	require.Contains(t, stats.ZfsPools, "tank")
-	assert.InDelta(t, 22350.8105, stats.ZfsPools["tank"].Total, 0.0001) // Size in GiB
-	assert.InDelta(t, 11175.8709, stats.ZfsPools["tank"].Used, 0.0001)  // Alloc in GiB
+	assert.InDelta(t, 23999.0, stats.ZfsPools["tank"].Total, 0.0001) // Size in GB
+	assert.InDelta(t, 12000.0, stats.ZfsPools["tank"].Used, 0.0001)  // Alloc in GB
 	assert.Equal(t, "ONLINE", stats.ZfsPools["tank"].Health)
 	assert.InDelta(t, 1250, stats.ZfsPools["tank"].ReadBytes, 5)
 	assert.InDelta(t, 5120, stats.ZfsPools["tank"].WriteBytes, 5)

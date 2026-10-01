@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 package utils
 
 import (
@@ -36,10 +38,10 @@ func TestBytesToMegabytes(t *testing.T) {
 		input    float64
 		expected float64
 	}{
-		{"1 MB", 1048576, 1.0},
-		{"512 KB", 524288, 0.5},
+		{"1 MB", 1_000_000, 1.0},
+		{"500 KB", 500_000, 0.5},
 		{"zero", 0, 0},
-		{"large value", 1073741824, 1024}, // 1 GB = 1024 MB
+		{"large value", 1_000_000_000, 1000}, // 1 GB = 1000 MB
 	}
 
 	for _, tt := range tests {
@@ -56,10 +58,10 @@ func TestBytesToGigabytes(t *testing.T) {
 		input    uint64
 		expected float64
 	}{
-		{"1 GB", 1073741824, 1.0},
-		{"512 MB", 536870912, 0.5},
+		{"1 GB", 1_000_000_000, 1.0},
+		{"500 MB", 500_000_000, 0.5},
 		{"0 GB", 0, 0},
-		{"2 GB", 2147483648, 2.0},
+		{"2 GB", 2_000_000_000, 2.0},
 	}
 
 	for _, tt := range tests {

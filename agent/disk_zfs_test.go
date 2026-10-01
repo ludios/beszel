@@ -35,8 +35,8 @@ func TestUpdateDiskUsageZfsMountpoint(t *testing.T) {
 
 	fs := agent.fsStats["tank"]
 	require.NotNil(t, fs)
-	assert.Equal(t, 22350.81, fs.DiskTotal) // (used + avail) in GiB
-	assert.Equal(t, 11175.87, fs.DiskUsed)
+	assert.Equal(t, 23999.0, fs.DiskTotal) // (used + avail) in GB
+	assert.Equal(t, 12000.0, fs.DiskUsed)
 	// Non-root filesystems do not populate system-level stats.
 	assert.Equal(t, float64(0), stats.DiskTotal)
 }
@@ -60,11 +60,11 @@ func TestUpdateDiskUsageZfsRootPopulatesSystemStats(t *testing.T) {
 	var stats system.Stats
 	agent.updateDiskUsage(&stats)
 
-	assert.Equal(t, 1117.59, agent.fsStats["rpool/ROOT/pve-1"].DiskTotal)
-	assert.Equal(t, 838.19, agent.fsStats["rpool/ROOT/pve-1"].DiskUsed)
+	assert.Equal(t, 1200.0, agent.fsStats["rpool/ROOT/pve-1"].DiskTotal)
+	assert.Equal(t, 900.0, agent.fsStats["rpool/ROOT/pve-1"].DiskUsed)
 	assert.Equal(t, 75.0, stats.DiskPct)
-	assert.Equal(t, 1117.59, stats.DiskTotal)
-	assert.Equal(t, 838.19, stats.DiskUsed)
+	assert.Equal(t, 1200.0, stats.DiskTotal)
+	assert.Equal(t, 900.0, stats.DiskUsed)
 }
 
 // TestUpdateDiskUsageWithoutZfsManager falls back to statfs when no manager is

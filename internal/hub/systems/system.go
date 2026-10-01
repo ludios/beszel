@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 package systems
 
 import (
@@ -585,11 +587,7 @@ func createContainerRecords(app core.App, data []*container.Stats, systemId stri
 		params["health"+suffix] = container.Health
 		params["cpu"+suffix] = container.Cpu
 		params["memory"+suffix] = container.Mem
-		netBytes := container.Bandwidth[0] + container.Bandwidth[1]
-		if netBytes == 0 {
-			netBytes = uint64((container.NetworkSent + container.NetworkRecv) * 1024 * 1024)
-		}
-		params["net"+suffix] = netBytes
+		params["net"+suffix] = container.Bandwidth[0] + container.Bandwidth[1]
 		params["updateAvailable"+suffix] = container.UpdateAvailable
 	}
 	queryString := fmt.Sprintf(
@@ -1062,23 +1060,6 @@ func getJitter() <-chan time.Time {
 //
 // This is run when processing incoming system data from agents, which may be on older versions.
 func migrateDeprecatedFields(cd *system.CombinedData, createDetails bool) {
-	// migration added 0.19.0
-	if cd.Stats.Bandwidth[0] == 0 && cd.Stats.Bandwidth[1] == 0 {
-		cd.Stats.Bandwidth[0] = uint64(cd.Stats.NetworkSent * 1024 * 1024)
-		cd.Stats.Bandwidth[1] = uint64(cd.Stats.NetworkRecv * 1024 * 1024)
-		cd.Stats.NetworkSent, cd.Stats.NetworkRecv = 0, 0
-	}
-	// migration added 0.19.0
-	if cd.Info.BandwidthBytes == 0 {
-		cd.Info.BandwidthBytes = uint64(cd.Info.Bandwidth * 1024 * 1024)
-		cd.Info.Bandwidth = 0
-	}
-	// migration added 0.19.0
-	if cd.Stats.DiskIO[0] == 0 && cd.Stats.DiskIO[1] == 0 {
-		cd.Stats.DiskIO[0] = uint64(cd.Stats.DiskReadPs * 1024 * 1024)
-		cd.Stats.DiskIO[1] = uint64(cd.Stats.DiskWritePs * 1024 * 1024)
-		cd.Stats.DiskReadPs, cd.Stats.DiskWritePs = 0, 0
-	}
 	// migration added 0.19.0 - Move deprecated Info fields to Details struct
 	if cd.Details == nil && cd.Info.Hostname != "" {
 		if createDetails {
@@ -1090,7 +1071,7 @@ func migrateDeprecatedFields(cd *system.CombinedData, createDetails bool) {
 				CpuModel:    cd.Info.CpuModel,
 				Podman:      cd.Info.Podman,
 				Os:          cd.Info.Os,
-				MemoryTotal: uint64(cd.Stats.Mem * 1024 * 1024 * 1024),
+				MemoryTotal: uint64(cd.Stats.Mem * 1e9),
 			}
 		}
 		// zero the deprecated fields to prevent saving them in systems.info DB json payload

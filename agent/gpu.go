@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 package agent
 
 import (
@@ -34,8 +36,8 @@ const (
 	maxFailureRetries int           = 5
 
 	// Unit Conversions
-	mebibytesInAMegabyte float64 = 1.024  // nvidia-smi reports memory in MiB
-	milliwattsInAWatt    float64 = 1000.0 // tegrastats reports power in mW
+	megabytesInAMebibyte float64 = 1.048576 // nvidia-smi and tegrastats report memory in MiB (2^20 bytes)
+	milliwattsInAWatt    float64 = 1000.0   // tegrastats reports power in mW
 )
 
 // GPUManager manages data collection for GPUs (either Nvidia or AMD)
@@ -206,8 +208,10 @@ func (gm *GPUManager) getJetsonParser() func(output []byte) bool {
 		// Parse RAM usage
 		ramMatches := ramPattern.FindSubmatch(output)
 		if ramMatches != nil {
-			gpuData.MemoryUsed, _ = strconv.ParseFloat(string(ramMatches[1]), 64)
-			gpuData.MemoryTotal, _ = strconv.ParseFloat(string(ramMatches[2]), 64)
+			memoryUsed, _ := strconv.ParseFloat(string(ramMatches[1]), 64)
+			memoryTotal, _ := strconv.ParseFloat(string(ramMatches[2]), 64)
+			gpuData.MemoryUsed = memoryUsed * megabytesInAMebibyte
+			gpuData.MemoryTotal = memoryTotal * megabytesInAMebibyte
 		}
 		// Parse GR3D (GPU) usage
 		gr3dMatches := gr3dPattern.FindSubmatch(output)
@@ -264,8 +268,8 @@ func (gm *GPUManager) parseNvidiaData(output []byte) bool {
 		// update gpu data
 		gpu := gm.GpuDataMap[id]
 		gpu.Temperature = temp
-		gpu.MemoryUsed = memoryUsage / mebibytesInAMegabyte
-		gpu.MemoryTotal = totalMemory / mebibytesInAMegabyte
+		gpu.MemoryUsed = memoryUsage * megabytesInAMebibyte
+		gpu.MemoryTotal = totalMemory * megabytesInAMebibyte
 		gpu.Usage += usage
 		gpu.Power += power
 		gpu.Count++

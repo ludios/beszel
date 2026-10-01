@@ -165,8 +165,8 @@ func (b *poolBackend) updateBackendStats(systemStats *system.Stats) {
 		stats := &system.ZfsPool{
 			DisplayName: pool.DisplayName,
 			Raw:         pool.Raw,
-			Total:       float64(pool.Size) / (1024 * 1024 * 1024),
-			Used:        float64(pool.Alloc) / (1024 * 1024 * 1024),
+			Total:       float64(pool.Size) / 1e9,
+			Used:        float64(pool.Alloc) / 1e9,
 			Health:      pool.Health,
 		}
 		if kernel, exists := kernelStats[pool.Name]; exists && kernel.Health != "" {

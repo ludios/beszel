@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 // Package records handles creating longer records and deleting old records.
 package records
 
@@ -312,10 +314,6 @@ func AverageSystemStatsSlice(records []system.Stats) system.Stats {
 		sum.DiskTotal += stats.DiskTotal
 		sum.DiskUsed += stats.DiskUsed
 		sum.DiskPct += stats.DiskPct
-		sum.DiskReadPs += stats.DiskReadPs
-		sum.DiskWritePs += stats.DiskWritePs
-		sum.NetworkSent += stats.NetworkSent
-		sum.NetworkRecv += stats.NetworkRecv
 		sum.LoadAvg[0] += stats.LoadAvg[0]
 		sum.LoadAvg[1] += stats.LoadAvg[1]
 		sum.LoadAvg[2] += stats.LoadAvg[2]
@@ -349,10 +347,6 @@ func AverageSystemStatsSlice(records []system.Stats) system.Stats {
 		// Set peak values
 		sum.MaxCpu = max(sum.MaxCpu, stats.MaxCpu, stats.Cpu)
 		sum.MaxMem = max(sum.MaxMem, stats.MaxMem, stats.MemUsed)
-		sum.MaxNetworkSent = max(sum.MaxNetworkSent, stats.MaxNetworkSent, stats.NetworkSent)
-		sum.MaxNetworkRecv = max(sum.MaxNetworkRecv, stats.MaxNetworkRecv, stats.NetworkRecv)
-		sum.MaxDiskReadPs = max(sum.MaxDiskReadPs, stats.MaxDiskReadPs, stats.DiskReadPs)
-		sum.MaxDiskWritePs = max(sum.MaxDiskWritePs, stats.MaxDiskWritePs, stats.DiskWritePs)
 		sum.MaxBandwidth[0] = max(sum.MaxBandwidth[0], stats.MaxBandwidth[0], stats.Bandwidth[0])
 		sum.MaxBandwidth[1] = max(sum.MaxBandwidth[1], stats.MaxBandwidth[1], stats.Bandwidth[1])
 		sum.MaxDiskIO[0] = max(sum.MaxDiskIO[0], stats.MaxDiskIO[0], stats.DiskIO[0])
@@ -410,10 +404,6 @@ func AverageSystemStatsSlice(records []system.Stats) system.Stats {
 				fs := sum.ExtraFs[key]
 				fs.DiskTotal += value.DiskTotal
 				fs.DiskUsed += value.DiskUsed
-				fs.DiskWritePs += value.DiskWritePs
-				fs.DiskReadPs += value.DiskReadPs
-				fs.MaxDiskReadPS = max(fs.MaxDiskReadPS, value.MaxDiskReadPS, value.DiskReadPs)
-				fs.MaxDiskWritePS = max(fs.MaxDiskWritePS, value.MaxDiskWritePS, value.DiskWritePs)
 				fs.DiskReadBytes += value.DiskReadBytes
 				fs.DiskWriteBytes += value.DiskWriteBytes
 				fs.MaxDiskReadBytes = max(fs.MaxDiskReadBytes, value.MaxDiskReadBytes, value.DiskReadBytes)
@@ -505,15 +495,11 @@ func AverageSystemStatsSlice(records []system.Stats) system.Stats {
 	sum.DiskTotal = twoDecimals(sum.DiskTotal / count)
 	sum.DiskUsed = twoDecimals(sum.DiskUsed / count)
 	sum.DiskPct = twoDecimals(sum.DiskPct / count)
-	sum.DiskReadPs = twoDecimals(sum.DiskReadPs / count)
-	sum.DiskWritePs = twoDecimals(sum.DiskWritePs / count)
 	sum.DiskIO[0] = sum.DiskIO[0] / uint64(count)
 	sum.DiskIO[1] = sum.DiskIO[1] / uint64(count)
 	for i := range sum.DiskIoStats {
 		sum.DiskIoStats[i] = twoDecimals(sum.DiskIoStats[i] / count)
 	}
-	sum.NetworkSent = twoDecimals(sum.NetworkSent / count)
-	sum.NetworkRecv = twoDecimals(sum.NetworkRecv / count)
 	sum.LoadAvg[0] = twoDecimals(sum.LoadAvg[0] / count)
 	sum.LoadAvg[1] = twoDecimals(sum.LoadAvg[1] / count)
 	sum.LoadAvg[2] = twoDecimals(sum.LoadAvg[2] / count)
@@ -562,8 +548,6 @@ func AverageSystemStatsSlice(records []system.Stats) system.Stats {
 			fs := sum.ExtraFs[key]
 			fs.DiskTotal = twoDecimals(fs.DiskTotal / count)
 			fs.DiskUsed = twoDecimals(fs.DiskUsed / count)
-			fs.DiskWritePs = twoDecimals(fs.DiskWritePs / count)
-			fs.DiskReadPs = twoDecimals(fs.DiskReadPs / count)
 			fs.DiskReadBytes = fs.DiskReadBytes / uint64(count)
 			fs.DiskWriteBytes = fs.DiskWriteBytes / uint64(count)
 			for i := range fs.DiskIoStats {
@@ -669,14 +653,8 @@ func AverageContainerStatsSlice(records [][]container.Stats) []container.Stats {
 			}
 			sums[stat.Name].Cpu += stat.Cpu
 			sums[stat.Name].Mem += stat.Mem
-			sentBytes := stat.Bandwidth[0]
-			recvBytes := stat.Bandwidth[1]
-			if sentBytes == 0 && recvBytes == 0 && (stat.NetworkSent != 0 || stat.NetworkRecv != 0) {
-				sentBytes = uint64(stat.NetworkSent * 1024 * 1024)
-				recvBytes = uint64(stat.NetworkRecv * 1024 * 1024)
-			}
-			sums[stat.Name].Bandwidth[0] += sentBytes
-			sums[stat.Name].Bandwidth[1] += recvBytes
+			sums[stat.Name].Bandwidth[0] += stat.Bandwidth[0]
+			sums[stat.Name].Bandwidth[1] += stat.Bandwidth[1]
 		}
 	}
 

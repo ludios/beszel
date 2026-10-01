@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 import { t } from "@lingui/core/macro"
 import AreaChartDefault from "@/components/charts/area-chart"
 import { useContainerDataPoints } from "@/components/charts/hooks"
@@ -41,11 +43,11 @@ export function MemoryChart({
 				maxToggled={showMax}
 				showTotal={true}
 				tickFormatter={(value) => {
-					const { value: convertedValue, unit } = formatBytes(value * 1024, false, Unit.Bytes, true)
+					const { value: convertedValue, unit } = formatBytes(value * 1000, false, Unit.Bytes, true)
 					return `${toFixedFloat(convertedValue, value >= 10 ? 0 : 1)} ${unit}`
 				}}
 				contentFormatter={({ value }) => {
-					const { value: convertedValue, unit } = formatBytes(value * 1024, false, Unit.Bytes, true)
+					const { value: convertedValue, unit } = formatBytes(value * 1000, false, Unit.Bytes, true)
 					return `${decimalString(convertedValue, convertedValue >= 100 ? 1 : 2)} ${unit}`
 				}}
 				dataPoints={[
@@ -147,11 +149,11 @@ export function SwapChart({
 				domain={[0, () => toFixedFloat(chartData.systemStats.at(-1)?.stats.s ?? 0.04, 2)]}
 				contentFormatter={({ value }) => {
 					// mem values are supplied as GB
-					const { value: convertedValue, unit } = formatBytes(value * 1024, false, Unit.Bytes, true)
+					const { value: convertedValue, unit } = formatBytes(value * 1000, false, Unit.Bytes, true)
 					return `${decimalString(convertedValue, convertedValue >= 100 ? 1 : 2)} ${unit}`
 				}}
 				tickFormatter={(value) => {
-					const { value: convertedValue, unit } = formatBytes(value * 1024, false, Unit.Bytes, true)
+					const { value: convertedValue, unit } = formatBytes(value * 1000, false, Unit.Bytes, true)
 					return `${toFixedFloat(convertedValue, value >= 10 ? 0 : 1)} ${unit}`
 				}}
 				dataPoints={[

@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 // Package utils provides utility functions for the agent.
 package utils
 
@@ -21,14 +23,14 @@ func GetEnv(key string) (value string, exists bool) {
 	return os.LookupEnv(key)
 }
 
-// BytesToMegabytes converts bytes to megabytes and rounds to two decimal places.
+// BytesToMegabytes converts bytes to SI megabytes (10^6 bytes) and rounds to two decimal places.
 func BytesToMegabytes(b float64) float64 {
-	return TwoDecimals(b / 1048576)
+	return TwoDecimals(b / 1e6)
 }
 
-// BytesToGigabytes converts bytes to gigabytes and rounds to two decimal places.
+// BytesToGigabytes converts bytes to SI gigabytes (10^9 bytes) and rounds to two decimal places.
 func BytesToGigabytes(b uint64) float64 {
-	return TwoDecimals(float64(b) / 1073741824)
+	return TwoDecimals(float64(b) / 1e9)
 }
 
 // TwoDecimals rounds a float64 value to two decimal places.

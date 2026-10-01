@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 package alerts
 
 import (
@@ -67,7 +69,7 @@ func (am *AlertManager) HandleSystemAlerts(systemRecord *core.Record, data *syst
 		case "Memory":
 			val = data.Info.MemPct
 		case "Bandwidth":
-			val = float64(data.Info.BandwidthBytes) / (1024 * 1024)
+			val = float64(data.Info.BandwidthBytes) / 1e6
 			unit = " MB/s"
 		case "Disk":
 			maxUsedPct := data.Info.DiskPct
@@ -235,7 +237,7 @@ func (am *AlertManager) HandleSystemAlerts(systemRecord *core.Record, data *syst
 			case "Memory":
 				alert.val += stats.Mem
 			case "Bandwidth":
-				alert.val += float64(stats.Bandwidth[0]+stats.Bandwidth[1]) / (1024 * 1024)
+				alert.val += float64(stats.Bandwidth[0]+stats.Bandwidth[1]) / 1e6
 			case "Disk":
 				if alert.mapSums == nil {
 					alert.mapSums = make(map[string]float32, len(stats.ExtraFs)+1)

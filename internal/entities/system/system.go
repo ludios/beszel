@@ -1,3 +1,5 @@
+// Model-output: Claude Fable 5
+
 package system
 
 // TODO: this is confusing, make common package with common/types common/helpers etc
@@ -20,30 +22,22 @@ type WiFi struct {
 }
 
 type Stats struct {
-	Cpu            float64             `json:"cpu" cbor:"0,keyasint"`
-	MaxCpu         float64             `json:"cpum,omitempty" cbor:"-"`
-	Mem            float64             `json:"m" cbor:"2,keyasint"`
-	MaxMem         float64             `json:"mm,omitempty" cbor:"-"`
-	MemUsed        float64             `json:"mu" cbor:"3,keyasint"`
-	MemPct         float64             `json:"mp" cbor:"4,keyasint"`
-	MemBuffCache   float64             `json:"mb" cbor:"5,keyasint"`
-	MemZfsArc      float64             `json:"mz,omitempty" cbor:"6,keyasint,omitempty"` // ZFS ARC memory
-	Swap           float64             `json:"s,omitempty" cbor:"7,keyasint,omitempty"`
-	SwapUsed       float64             `json:"su,omitempty" cbor:"8,keyasint,omitempty"`
-	DiskTotal      float64             `json:"d" cbor:"9,keyasint"`
-	DiskUsed       float64             `json:"du" cbor:"10,keyasint"`
-	DiskPct        float64             `json:"dp" cbor:"11,keyasint"`
-	DiskReadPs     float64             `json:"dr,omitzero" cbor:"12,keyasint,omitzero"`
-	DiskWritePs    float64             `json:"dw,omitzero" cbor:"13,keyasint,omitzero"`
-	MaxDiskReadPs  float64             `json:"drm,omitempty" cbor:"-"`
-	MaxDiskWritePs float64             `json:"dwm,omitempty" cbor:"-"`
-	NetworkSent    float64             `json:"ns,omitzero" cbor:"16,keyasint,omitzero"`
-	NetworkRecv    float64             `json:"nr,omitzero" cbor:"17,keyasint,omitzero"`
-	MaxNetworkSent float64             `json:"nsm,omitempty" cbor:"-"`
-	MaxNetworkRecv float64             `json:"nrm,omitempty" cbor:"-"`
-	Temperatures   map[string]float64  `json:"t,omitempty" cbor:"20,keyasint,omitempty"`
-	ExtraFs        map[string]*FsStats `json:"efs,omitempty" cbor:"21,keyasint,omitempty"`
-	GPUData        map[string]GPUData  `json:"g,omitempty" cbor:"22,keyasint,omitempty"`
+	Cpu          float64             `json:"cpu" cbor:"0,keyasint"`
+	MaxCpu       float64             `json:"cpum,omitempty" cbor:"-"`
+	Mem          float64             `json:"m" cbor:"2,keyasint"` // GB (10^9 bytes), as are all other mem/disk sizes here
+	MaxMem       float64             `json:"mm,omitempty" cbor:"-"`
+	MemUsed      float64             `json:"mu" cbor:"3,keyasint"`
+	MemPct       float64             `json:"mp" cbor:"4,keyasint"`
+	MemBuffCache float64             `json:"mb" cbor:"5,keyasint"`
+	MemZfsArc    float64             `json:"mz,omitempty" cbor:"6,keyasint,omitempty"` // ZFS ARC memory
+	Swap         float64             `json:"s,omitempty" cbor:"7,keyasint,omitempty"`
+	SwapUsed     float64             `json:"su,omitempty" cbor:"8,keyasint,omitempty"`
+	DiskTotal    float64             `json:"d" cbor:"9,keyasint"`
+	DiskUsed     float64             `json:"du" cbor:"10,keyasint"`
+	DiskPct      float64             `json:"dp" cbor:"11,keyasint"`
+	Temperatures map[string]float64  `json:"t,omitempty" cbor:"20,keyasint,omitempty"`
+	ExtraFs      map[string]*FsStats `json:"efs,omitempty" cbor:"21,keyasint,omitempty"`
+	GPUData      map[string]GPUData  `json:"g,omitempty" cbor:"22,keyasint,omitempty"`
 	// LoadAvg1       float64             `json:"l1,omitempty" cbor:"23,keyasint,omitempty"`
 	// LoadAvg5       float64             `json:"l5,omitempty" cbor:"24,keyasint,omitempty"`
 	// LoadAvg15      float64             `json:"l15,omitempty" cbor:"25,keyasint,omitempty"`
@@ -73,8 +67,8 @@ type ZfsPool struct {
 	HideUsage   bool    `json:"hu,omitempty" cbor:"6,keyasint,omitempty"` // equivalent filesystem usage chart exists
 	HideIO      bool    `json:"hi,omitempty" cbor:"7,keyasint,omitempty"` // equivalent filesystem I/O chart exists
 	Raw         bool    `json:"raw,omitempty" cbor:"5,keyasint,omitempty"`
-	Total       float64 `json:"d" cbor:"0,keyasint"`                     // total capacity in GiB
-	Used        float64 `json:"du" cbor:"1,keyasint"`                    // allocated in GiB
+	Total       float64 `json:"d" cbor:"0,keyasint"`                     // total capacity in GB (10^9 bytes)
+	Used        float64 `json:"du" cbor:"1,keyasint"`                    // allocated in GB (10^9 bytes)
 	ReadBytes   uint64  `json:"rb,omitzero" cbor:"2,keyasint,omitzero"`  // read throughput in bytes/s
 	WriteBytes  uint64  `json:"wb,omitzero" cbor:"3,keyasint,omitzero"`  // write throughput in bytes/s
 	Health      string  `json:"h,omitempty" cbor:"4,keyasint,omitempty"` // ONLINE, DEGRADED, FAULTED, ...
@@ -109,8 +103,8 @@ func (b Battery) MarshalJSON() ([]byte, error) {
 type GPUData struct {
 	Name        string             `json:"n" cbor:"0,keyasint"`
 	Temperature float64            `json:"-"`
-	MemoryUsed  float64            `json:"mu,omitempty,omitzero" cbor:"1,keyasint,omitempty,omitzero"`
-	MemoryTotal float64            `json:"mt,omitempty,omitzero" cbor:"2,keyasint,omitempty,omitzero"`
+	MemoryUsed  float64            `json:"mu,omitempty,omitzero" cbor:"1,keyasint,omitempty,omitzero"` // MB (10^6 bytes)
+	MemoryTotal float64            `json:"mt,omitempty,omitzero" cbor:"2,keyasint,omitempty,omitzero"` // MB (10^6 bytes)
 	Usage       float64            `json:"u" cbor:"3,keyasint,omitempty"`
 	Power       float64            `json:"p,omitempty" cbor:"4,keyasint,omitempty"`
 	Count       float64            `json:"-"`
@@ -119,18 +113,13 @@ type GPUData struct {
 }
 
 type FsStats struct {
-	Root           bool    `json:"-"`
-	Mountpoint     string  `json:"-"`
-	Name           string  `json:"-"`
-	DiskTotal      float64 `json:"d" cbor:"0,keyasint"`
-	DiskUsed       float64 `json:"du" cbor:"1,keyasint"`
-	TotalRead      uint64  `json:"tr,omitzero" cbor:"9,keyasint,omitzero"`  // cumulative device read bytes
-	TotalWrite     uint64  `json:"tw,omitzero" cbor:"10,keyasint,omitzero"` // cumulative device write bytes
-	DiskReadPs     float64 `json:"r" cbor:"2,keyasint"`
-	DiskWritePs    float64 `json:"w" cbor:"3,keyasint"`
-	MaxDiskReadPS  float64 `json:"rm,omitempty" cbor:"-"`
-	MaxDiskWritePS float64 `json:"wm,omitempty" cbor:"-"`
-	// TODO: remove DiskReadPs and DiskWritePs in future release in favor of DiskReadBytes and DiskWriteBytes
+	Root              bool       `json:"-"`
+	Mountpoint        string     `json:"-"`
+	Name              string     `json:"-"`
+	DiskTotal         float64    `json:"d" cbor:"0,keyasint"`
+	DiskUsed          float64    `json:"du" cbor:"1,keyasint"`
+	TotalRead         uint64     `json:"tr,omitzero" cbor:"9,keyasint,omitzero"`  // cumulative device read bytes
+	TotalWrite        uint64     `json:"tw,omitzero" cbor:"10,keyasint,omitzero"` // cumulative device write bytes
 	DiskReadBytes     uint64     `json:"rb" cbor:"6,keyasint,omitempty"`
 	DiskWriteBytes    uint64     `json:"wb" cbor:"7,keyasint,omitempty"`
 	MaxDiskReadBytes  uint64     `json:"rbm,omitempty" cbor:"-"`
@@ -175,7 +164,6 @@ type Info struct {
 	Cpu           float64 `json:"cpu" cbor:"6,keyasint"`
 	MemPct        float64 `json:"mp" cbor:"7,keyasint"`
 	DiskPct       float64 `json:"dp" cbor:"8,keyasint"`
-	Bandwidth     float64 `json:"b,omitzero" cbor:"9,keyasint"` // deprecated in favor of BandwidthBytes
 	AgentVersion  string  `json:"v" cbor:"10,keyasint"`
 	Podman        bool    `json:"p,omitempty" cbor:"11,keyasint,omitempty"` // deprecated - moved to Details struct
 	GpuPct        float64 `json:"g,omitempty" cbor:"12,keyasint,omitempty"`
