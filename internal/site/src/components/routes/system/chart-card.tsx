@@ -108,13 +108,13 @@ export function ChartCard({
 	return (
 		<Card
 			className={cn(
-				"px-3 py-5 sm:py-6 sm:px-6 odd:last-of-type:col-span-full min-h-full",
+				"p-3 odd:last-of-type:col-span-full min-h-full",
 				{ "col-span-full": !grid },
 				className
 			)}
 			ref={ref}
 		>
-			<CardHeader className="gap-1.5 relative p-0 mb-3 sm:mb-4">
+			<CardHeader className="gap-1.5 relative p-0 mb-3">
 				<CardTitle>{title}</CardTitle>
 				<CardDescription>{description}</CardDescription>
 				{cornerEl && <div className="grid sm:justify-end sm:absolute sm:top-0 sm:end-0 my-1 sm:my-0">{cornerEl}</div>}

@@ -187,8 +187,8 @@ export default function SystemdTable({ systemId }: { systemId?: string }) {
 
 	return (
 		// w-min lets the card grow past the layout width rather than let the table overflow the card
-		<Card className="w-min min-w-full px-3 py-5 sm:py-6 sm:px-6">
-			<CardHeader className="p-0 mb-3 sm:mb-4">
+		<Card className="w-min min-w-full p-3">
+			<CardHeader className="p-0 mb-3">
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
 					<div className="px-2 sm:px-1">
 						<CardTitle className="mb-2">
