@@ -1,3 +1,4 @@
+/* Model-output: Claude Opus 5.5 */
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -175,12 +176,12 @@
 		cursor: pointer;
 	}
 
-	/* a table header cell's button (e.g. sort) takes clicks anywhere in the cell */
-	th:has(> button) {
+	/* a table header cell's button (e.g. sort, but not a select-all checkbox) takes clicks anywhere in the cell */
+	th:has(> button:not([role="checkbox"])) {
 		position: relative;
 	}
 
-	th > button::after {
+	th > button:not([role="checkbox"])::after {
 		content: "";
 		position: absolute;
 		inset: 0;
