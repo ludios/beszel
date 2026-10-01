@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 /** biome-ignore-all lint/security/noDangerouslySetInnerHtml: html comes directly from docker via agent */
 import { t } from "@lingui/core/macro"
 import { Trans } from "@lingui/react/macro"
@@ -168,7 +169,7 @@ export default function ContainersTable({ systemId }: { systemId?: string }) {
 		<Card className="@container w-full p-3">
 			<CardHeader className="p-0 mb-3">
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
-					<div className="px-2 sm:px-1">
+					<div>
 						<CardTitle className="mb-2">
 							<Trans>All containers</Trans>
 						</CardTitle>

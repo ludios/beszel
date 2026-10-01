@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { useStore } from "@nanostores/react"
 import { GithubIcon } from "lucide-react"
 import { $newVersion } from "@/lib/stores"
@@ -7,7 +8,7 @@ import { Trans } from "@lingui/react/macro"
 export function FooterRepoLink() {
 	const newVersion = useStore($newVersion)
 	return (
-		<div className="flex gap-1.5 justify-end items-center pe-3 sm:pe-6 mt-3.5 mb-4 text-xs opacity-80">
+		<div className="flex gap-1.5 justify-end items-center pe-3 mt-3.5 mb-4 text-xs opacity-80">
 			<a
 				href="https://github.com/henrygd/beszel"
 				target="_blank"

@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { plural } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
 import {
@@ -200,7 +201,7 @@ export default function InfoBar({
 						})}
 					</div>
 				</div>
-				<div className="xl:ms-auto flex items-center gap-2 max-sm:-mb-1">
+				<div className="xl:ms-auto flex items-center gap-2">
 					<ChartTimeSelect className="w-full xl:w-40" agentVersion={chartData.agentVersion} />
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>

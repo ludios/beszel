@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { t } from "@lingui/core/macro"
 import { Trans } from "@lingui/react/macro"
 import {
@@ -214,7 +215,7 @@ export default function PackageUpdatesTable({ systemId, counts }: { systemId: st
 		<Card className="@container w-full p-3">
 			<CardHeader className="p-0 mb-3">
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
-					<div className="px-2 sm:px-1">
+					<div>
 						<CardTitle className="mb-2">
 							<Trans>Package Updates</Trans>
 						</CardTitle>
@@ -265,7 +266,7 @@ export default function PackageUpdatesTable({ systemId, counts }: { systemId: st
 				</div>
 			</CardHeader>
 			{error ? (
-				<p className="px-2 sm:px-1 text-sm text-muted-foreground">{error}</p>
+				<p className="text-sm text-muted-foreground">{error}</p>
 			) : (
 				<div className="h-min max-h-[calc(100dvh-17rem)] max-w-full relative overflow-auto border rounded-md">
 					<table className="text-sm w-full text-nowrap">

@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { t } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useStore } from "@nanostores/react"
@@ -119,7 +120,7 @@ export function ChartCard({
 				<CardDescription>{description}</CardDescription>
 				{cornerEl && <div className="grid sm:justify-end sm:absolute sm:top-0 sm:end-0 my-1 sm:my-0">{cornerEl}</div>}
 			</CardHeader>
-			<div className={cn("ps-0 -me-1 -ms-3.5 relative group", legend ? "h-54 md:h-56" : "h-48 md:h-52")}>
+			<div className={cn("ps-0 -me-1 -ms-3 relative group", legend ? "h-54 md:h-56" : "h-48 md:h-52")}>
 				{
 					<Spinner
 						msg={empty ? t`Waiting for enough records to display` : undefined}

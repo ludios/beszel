@@ -1,3 +1,4 @@
+// Model-output: Claude Opus 5.5
 import { t } from "@lingui/core/macro"
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useStore } from "@nanostores/react"

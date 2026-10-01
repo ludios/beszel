@@ -190,7 +190,7 @@ export default function SystemdTable({ systemId }: { systemId?: string }) {
 		<Card className="w-min min-w-full p-3">
 			<CardHeader className="p-0 mb-3">
 				<div className="grid md:flex gap-x-5 gap-y-3 w-full items-end">
-					<div className="px-2 sm:px-1">
+					<div>
 						<CardTitle className="mb-2">
 							<Trans>Systemd services</Trans>
 						</CardTitle>
